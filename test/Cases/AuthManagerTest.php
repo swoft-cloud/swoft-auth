@@ -16,4 +16,6 @@ namespace SwoftTest\Auth;
  */
 class AuthManagerTest extends AbstractTestCase
 {
+
+
 }

@@ -12,11 +12,13 @@ composer require swoft/auth
 
 ## Document
 
-- BasicAuth
-- BearerToken
-- JWT
+now
+- BasicAuth  
+- BearerToken  (JWT)
 - Acl
-- CodeHelper
+
+feature
+- oauth 2.0 
 
 ```php
 
