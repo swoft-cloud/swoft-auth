@@ -1,14 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/20
- * Time: 下午8:48
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Parser;
-
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\Constants\AuthConstants;
@@ -22,7 +22,6 @@ use Swoft\Bean\Annotation\Bean;
  */
 class BasicAuthParser implements AuthHandleInterface
 {
-
     const NAME = 'Basic';
 
     /**
@@ -33,10 +32,10 @@ class BasicAuthParser implements AuthHandleInterface
     {
         $authHeader = $request->getHeaderLine(AuthConstants::HEADER_KEY) ?? '';
         $basic = $this->parseValue($authHeader);
-        if($basic){
+        if ($basic) {
             $request = $request
-                ->withAttribute(AuthConstants::BASIC_USER_NAME,$this->getUsername($basic))
-                ->withAttribute(AuthConstants::BASIC_PASSWORD,$this->getPassword($basic));
+                ->withAttribute(AuthConstants::BASIC_USER_NAME, $this->getUsername($basic))
+                ->withAttribute(AuthConstants::BASIC_PASSWORD, $this->getPassword($basic));
         }
         return $request;
     }
@@ -46,7 +45,8 @@ class BasicAuthParser implements AuthHandleInterface
         return $basic[0]??'';
     }
 
-    protected function getPassword(array $basic){
+    protected function getPassword(array $basic)
+    {
         return $basic[1]??'';
     }
 
@@ -56,9 +56,9 @@ class BasicAuthParser implements AuthHandleInterface
             return null;
         }
         $val =  preg_replace('/.*\s/', '', $string);
-        if(!$val){
+        if (!$val) {
             return null;
         }
-        return  explode(':',base64_decode($val));
+        return  explode(':', base64_decode($val));
     }
 }

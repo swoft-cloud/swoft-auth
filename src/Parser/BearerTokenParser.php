@@ -1,14 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/20
- * Time: 下午8:48
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Parser;
-
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
@@ -25,7 +25,6 @@ use Swoft\Bean\Annotation\Bean;
  */
 class BearerTokenParser implements AuthHandleInterface
 {
-
     const NAME = 'Bearer';
 
     /**
@@ -37,9 +36,9 @@ class BearerTokenParser implements AuthHandleInterface
         $token = $this->getToken($request);
         /** @var AuthManager $manager */
         $manager = App::getBean(ServiceConstants::AUTH_MANAGER);
-        if($token){
+        if ($token) {
             $res = $manager->authenticateToken($token);
-            $request = $request->withAttribute(AuthConstants::IS_LOGIN,$res);
+            $request = $request->withAttribute(AuthConstants::IS_LOGIN, $res);
         }
         return $request;
     }
@@ -51,11 +50,11 @@ class BearerTokenParser implements AuthHandleInterface
         return $authQuery ? $authQuery : $this->parseValue($authHeader);
     }
 
-    protected function parseValue($string){
+    protected function parseValue($string)
+    {
         if (strpos(trim($string), self::NAME) !== 0) {
             return null;
         }
         return preg_replace('/.*\s/', '', $string);
     }
-
 }

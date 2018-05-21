@@ -1,35 +1,36 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/21
- * Time: 上午9:57
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth;
-
 
 use Swoft\Auth\Bean\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Core\RequestContext;
 
+/**
+ * Class AuthUserService
+ * @package Swoft\Auth
+ */
 class AuthUserService
 {
-
-
     public function getUserIdentity(): string
     {
-        if(!$this->getSession()){
+        if (!$this->getSession()) {
             return '';
         }
         return $this->getSession()->getIdentity() ?? '';
     }
 
-
     public function getUserExtendData(): array
     {
-        if(!$this->getSession()){
+        if (!$this->getSession()) {
             return [];
         }
         return $this->getSession()->getExtendedData() ?? [];
@@ -48,7 +49,7 @@ class AuthUserService
      * @param string $action 方法名
      * @return bool
      */
-    public function auth(string $controller,string $action): bool
+    public function auth(string $controller, string $action): bool
     {
         $id = $this->getUserIdentity();
         if ($id) {
@@ -56,5 +57,4 @@ class AuthUserService
         }
         return false;
     }
-
 }

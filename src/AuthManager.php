@@ -1,10 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/20
- * Time: 下午4:11
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth;
@@ -29,12 +30,11 @@ use Swoft\Core\RequestContext;
  */
 class AuthManager
 {
-
     /**
      * @Value("${config.auth.cache.prefix}")
      * @var string
      */
-    private $prefix = "token_";
+    private $prefix = 'token_';
 
     /**
      * @var int
@@ -59,7 +59,6 @@ class AuthManager
      * @var TokenParserInterface
      */
     protected $tokenParser;
-
 
     public function getSessionDuration()
     {
@@ -116,13 +115,12 @@ class AuthManager
             try {
                 $this->cache->set($this->getCacheKey($identity), $session->getToken(), $session->getExpirationTime());
             } catch (InvalidArgumentException $e) {
-                $err = sprintf("%s 参数无效",$session->getIdentity());
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,$err);
+                $err = sprintf('%s 参数无效', $session->getIdentity());
+                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
         return $session;
     }
-
 
     protected function getCacheKey($identity)
     {
@@ -168,10 +166,9 @@ class AuthManager
         return $account;
     }
 
-
-    public function getTokenParser():TokenParserInterface
+    public function getTokenParser(): TokenParserInterface
     {
-        if(empty($this->tokenParser)){
+        if (empty($this->tokenParser)) {
             $this->tokenParser = App::getBean(JWTTokenParser::class);
         }
         return $this->tokenParser;
@@ -214,14 +211,12 @@ class AuthManager
                     throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
                 }
             } catch (InvalidArgumentException $e) {
-                $err = sprintf("%s 参数无效",$session->getIdentity());
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,$err);
+                $err = sprintf('%s 参数无效', $session->getIdentity());
+                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
 
         $this->setSession($session);
         return true;
     }
-
-
 }

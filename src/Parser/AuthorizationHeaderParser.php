@@ -1,10 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/20
- * Time: 下午6:16
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Parser;
@@ -50,12 +51,10 @@ class AuthorizationHeaderParser implements RequestParserInterface
         return $request;
     }
 
-
     private function getHeadString(string $val):string
     {
-        return explode(' ',$val)[0] ?? '';
+        return explode(' ', $val)[0] ?? '';
     }
-
 
     private function mergeTypes(): array
     {
@@ -64,7 +63,6 @@ class AuthorizationHeaderParser implements RequestParserInterface
         }
         return $this->authTypes;
     }
-
 
     public function defaultTypes(): array
     {

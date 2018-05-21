@@ -1,13 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/4/18
- * Time: 下午3:20
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Parser;
-
 
 use Firebase\JWT\JWT;
 use Swoft\Auth\Bean\AuthSession;
@@ -21,10 +22,12 @@ use Swoft\Bean\Annotation\Value;
  */
 class JWTTokenParser implements TokenParserInterface
 {
-
     const ALGORITHM_HS256 = 'HS256';
+
     const ALGORITHM_HS512 = 'HS512';
+
     const ALGORITHM_HS384 = 'HS384';
+
     const ALGORITHM_RS256 = 'RS256';
 
     /**
@@ -32,12 +35,12 @@ class JWTTokenParser implements TokenParserInterface
      * @var string
      */
     protected $algorithm=self::ALGORITHM_HS256;
+
     /**
      * @Value("${config.auth.secret}")
      * @var string
      */
     protected $secret='swoft';
-
 
     /**
      * @param AuthSession $session
@@ -71,9 +74,8 @@ class JWTTokenParser implements TokenParserInterface
             ->setExtendedData($tokenData->data);
     }
 
-    protected function create(string $issuer, string $user, int $iat,int $exp,array $data):array
+    protected function create(string $issuer, string $user, int $iat, int $exp, array $data):array
     {
-
         return [
             /*
             The iss (issuer) claim identifies the principal
@@ -82,7 +84,7 @@ class JWTTokenParser implements TokenParserInterface
             The iss value is a case-sensitive string containing
             a StringOrURI value. Use of this claim is OPTIONAL.
             ------------------------------------------------*/
-            "iss" => $issuer,
+            'iss' => $issuer,
 
             /*
             The sub (subject) claim identifies the principal
@@ -95,7 +97,7 @@ class JWTTokenParser implements TokenParserInterface
             is a case-sensitive string containing a
             StringOrURI value. Use of this claim is OPTIONAL.
             ------------------------------------------------*/
-            "sub" => $user,
+            'sub' => $user,
 
             /*
             The iat (issued at) claim identifies the time at
@@ -104,7 +106,7 @@ class JWTTokenParser implements TokenParserInterface
             be a number containing a NumericDate value.
             Use of this claim is OPTIONAL.
             ------------------------------------------------*/
-            "iat" => $iat,
+            'iat' => $iat,
 
             /*
             The exp (expiration time) claim identifies the
@@ -118,26 +120,22 @@ class JWTTokenParser implements TokenParserInterface
             number containing a NumericDate value.
             Use of this claim is OPTIONAL.
             ------------------------------------------------*/
-            "exp" => $exp,
+            'exp' => $exp,
 
             /*
              Expand data
              ------------------------------------------------*/
-            "data" => $data,
+            'data' => $data,
         ];
     }
-
 
     public function encode($token): string
     {
         return (string)JWT::encode($token, $this->secret, $this->algorithm);
     }
 
-
     public function decode($token)
     {
         return JWT::decode($token, $this->secret, [$this->algorithm]);
     }
-
-
 }

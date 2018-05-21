@@ -1,22 +1,22 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/4/18
- * Time: 下午3:15
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Mapping;
-
 
 use Swoft\Auth\Bean\AuthResult;
 
 interface AccountTypeInterface
 {
+    const LOGIN_DATA_USERNAME = 'username';
 
-    const LOGIN_DATA_USERNAME = "username";
-
-    const LOGIN_DATA_PASSWORD = "password";
+    const LOGIN_DATA_PASSWORD = 'password';
 
     /**
      * @param array $data Login data
@@ -31,5 +31,4 @@ interface AccountTypeInterface
      * @return bool Authentication successful
      */
     public function authenticate(string $identity) :bool ;
-
 }

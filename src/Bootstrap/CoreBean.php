@@ -1,20 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/20
- * Time: 下午4:32
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Bootstrap;
 
 use Swoft\Auth\AuthManager;
-use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Constants\ServiceConstants;
-use Swoft\Auth\Helper\ErrorCodeHelper;
 use Swoft\Auth\Parser\AuthorizationHeaderParser;
-use Swoft\Auth\Parser\RequestHeaderParser;
 use Swoft\Bean\Annotation\BootBean;
 use Swoft\Core\BootBeanInterface;
 
@@ -25,7 +23,6 @@ use Swoft\Core\BootBeanInterface;
  */
 class CoreBean implements BootBeanInterface
 {
-
     /**
      * @return array
      */

@@ -1,22 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/21
- * Time: 上午9:58
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Constants;
 
-
 class ServiceConstants
 {
+    const AUTH_REQUEST_HEADER_PARSER = 'AuthRequestHeaderParser';
 
-    const AUTH_REQUEST_HEADER_PARSER = "AuthRequestHeaderParser";
+    const AUTH_MANAGER = 'AuthManager';
 
-    const AUTH_MANAGER = "AuthManager";
-
-    const AUTH_USERS_SERVICE = "AuthUserService";
-
+    const AUTH_USERS_SERVICE = 'AuthUserService';
 }

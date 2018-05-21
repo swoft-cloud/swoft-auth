@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/4/18
- * Time: 下午3:49
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Bean;
@@ -22,6 +24,7 @@ class AuthResult
      * @var string
      */
     protected $identity='';
+
     /**
      * @var array
      */
@@ -62,6 +65,4 @@ class AuthResult
         $this->extendedData = $extendedData;
         return $this;
     }
-
-
 }
