@@ -44,7 +44,7 @@ class AuthorizationHeaderParser implements RequestParserInterface
         $type = $this->getHeadString($authValue);
         if (isset($this->mergeTypes()[$type])) {
             /** @var AuthHandleInterface $handler */
-            $handler = App::getBean($type);
+            $handler = App::getBean($this->mergeTypes()[$type]);
             $request = $handler->parse($request);
         }
         return $request;

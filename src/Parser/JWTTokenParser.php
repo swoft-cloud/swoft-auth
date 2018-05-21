@@ -11,11 +11,13 @@ namespace Swoft\Auth\Parser;
 
 use Firebase\JWT\JWT;
 use Swoft\Auth\Bean\AuthSession;
+use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Annotation\Value;
 
 /**
  * Class JWTTokenParser
  * @package App\Component\Acl\TokenParsers
+ * @Bean()
  */
 class JWTTokenParser implements TokenParserInterface
 {

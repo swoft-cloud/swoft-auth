@@ -13,12 +13,16 @@ namespace Swoft\Auth\Parser;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Auth\AuthManager;
-use Swoft\Auth\Bean\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Mapping\AuthHandleInterface;
-use Swoft\Core\RequestContext;
+use Swoft\Bean\Annotation\Bean;
 
+/**
+ * Class BearerTokenParser
+ * @package Swoft\Auth\Parser
+ * @Bean()
+ */
 class BearerTokenParser implements AuthHandleInterface
 {
 

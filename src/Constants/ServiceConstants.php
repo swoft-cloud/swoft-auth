@@ -17,8 +17,6 @@ class ServiceConstants
 
     const AUTH_MANAGER = "AuthManager";
 
-    const AUTH_ERROR_CODE_HELPER = "AuthErrorCodeHelper";
-
     const AUTH_USERS_SERVICE = "AuthUserService";
 
 }

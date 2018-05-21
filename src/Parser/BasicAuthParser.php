@@ -13,7 +13,13 @@ namespace Swoft\Auth\Parser;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Mapping\AuthHandleInterface;
+use Swoft\Bean\Annotation\Bean;
 
+/**
+ * Class BasicAuthParser
+ * @package Swoft\Auth\Parser
+ * @Bean()
+ */
 class BasicAuthParser implements AuthHandleInterface
 {
 

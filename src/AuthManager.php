@@ -18,6 +18,7 @@ use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AccountTypeInterface;
+use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Auth\Parser\TokenParserInterface;
 use Swoft\Bean\Annotation\Value;
 use Swoft\Core\RequestContext;
@@ -146,7 +147,7 @@ class AuthManager
             ->setIdentity($identity)
             ->setAccountTypeName($accountTypeName);
         $session->setExtendedData($data);
-        $token = $this->tokenParser->getToken($session);
+        $token = $this->getTokenParser()->getToken($session);
         $session->setToken($token);
         return $session;
     }
@@ -167,6 +168,15 @@ class AuthManager
         return $account;
     }
 
+
+    public function getTokenParser():TokenParserInterface
+    {
+        if(empty($this->tokenParser)){
+            $this->tokenParser = App::getBean(JWTTokenParser::class);
+        }
+        return $this->tokenParser;
+    }
+
     /**
      * @param $token
      * @return bool
@@ -176,7 +186,7 @@ class AuthManager
     {
         try {
             /** @var AuthSession $session */
-            $session = $this->tokenParser->getSession($token);
+            $session = $this->getTokenParser()->getSession($token);
         } catch (\Exception $e) {
             throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
         }
@@ -208,6 +218,7 @@ class AuthManager
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,$err);
             }
         }
+
         $this->setSession($session);
         return true;
     }

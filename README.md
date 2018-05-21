@@ -14,6 +14,7 @@ composer require swoft/auth
 
 - BasicAuth
 - BearerToken
+- JWT
 - Acl
 - CodeHelper
 
