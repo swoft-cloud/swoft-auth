@@ -15,6 +15,7 @@ use Psr\SimpleCache\InvalidArgumentException;
 use Swoft\App;
 use Swoft\Auth\Bean\AuthResult;
 use Swoft\Auth\Bean\AuthSession;
+use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Parser\TokenParserInterface;
@@ -27,8 +28,6 @@ use Swoft\Core\RequestContext;
  */
 class AuthManager
 {
-
-    const KEY = "authSession";
 
     /**
      * @Value("${config.auth.cache.prefix}")
@@ -76,12 +75,12 @@ class AuthManager
      */
     public function getSession()
     {
-        return RequestContext::getContextDataByKey(self::KEY);
+        return RequestContext::getContextDataByKey(AuthConstants::AUTH_SESSION);
     }
 
     public function setSession(AuthSession $session)
     {
-        RequestContext::setContextData([self::KEY => $session]);
+        RequestContext::setContextData([AuthConstants::AUTH_SESSION => $session]);
     }
 
     /**

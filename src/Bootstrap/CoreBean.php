@@ -10,6 +10,8 @@
 namespace Swoft\Auth\Bootstrap;
 
 use Swoft\Auth\AuthManager;
+use Swoft\Auth\AuthUserService;
+use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Helper\ErrorCodeHelper;
 use Swoft\Auth\Parser\AuthorizationHeaderParser;
 use Swoft\Auth\Parser\RequestHeaderParser;
@@ -30,9 +32,10 @@ class CoreBean implements BootBeanInterface
     public function beans()
     {
         return [
-            'AuthRequestHeaderParser'=>AuthorizationHeaderParser::class,
-            'AuthManager'=>AuthManager::class,
-            'ErrorCodeHelper'=>ErrorCodeHelper::class
+            ServiceConstants::AUTH_REQUEST_HEADER_PARSER=>AuthorizationHeaderParser::class,
+            ServiceConstants::AUTH_MANAGER=>AuthManager::class,
+            ServiceConstants::AUTH_ERROR_CODE_HELPER=>ErrorCodeHelper::class,
+            ServiceConstants::AUTH_USERS_SERVICE=>AuthUserService::class
         ];
     }
 }
