@@ -10,20 +10,17 @@ Swoft Auth Component
 composer require swoft/auth
 ```
 
-## Document
+## Document [wiki](https://github.com/aprchen/swoft-auth/wiki)
 
 now
-- BasicAuth  
+- BasicAuth 
 - BearerToken  (JWT)
 - Acl
 
 feature
 - oauth 2.0 
 
-```php
 
-
-```
 
 ## Unit testing
 
