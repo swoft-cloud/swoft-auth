@@ -18,12 +18,13 @@ use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
+use Swoft\Bean\Annotation\Bean;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 
 /**
  * Class AclMiddleware
  * @package Swoft\Auth\Middleware
- *
+ * @Bean()
  */
 class AclMiddleware implements MiddlewareInterface
 {
@@ -41,6 +42,11 @@ class AclMiddleware implements MiddlewareInterface
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
         $handlerArray = self::getHandlerArray($requestHandler);
         if ($requestHandler && is_array($handlerArray)) {
+
+            if(!App::hasBean(ServiceConstants::AUTH_USERS_SERVICE)){
+                $error = sprintf("need AuthUserService %s",$requestHandler);
+                throw new AuthException(ErrorCode::POST_DATA_INVALID,$error);
+            }
             /** @var AuthUserService $service */
             $service = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
             $flag = $service->auth($handlerArray[0], $handlerArray[1]);

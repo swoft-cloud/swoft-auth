@@ -6,9 +6,7 @@
  * Time: 下午3:15
  */
 
-namespace App\Component\Auth\Account;
-
-
+namespace Swoft\Auth\Mapping;
 
 
 use Swoft\Auth\Bean\AuthResult;

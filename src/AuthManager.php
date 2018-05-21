@@ -9,7 +9,6 @@
 
 namespace Swoft\Auth;
 
-use App\Component\Auth\Account\AccountTypeInterface;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use Swoft\App;
@@ -18,6 +17,7 @@ use Swoft\Auth\Bean\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
+use Swoft\Auth\Mapping\AccountTypeInterface;
 use Swoft\Auth\Parser\TokenParserInterface;
 use Swoft\Bean\Annotation\Value;
 use Swoft\Core\RequestContext;

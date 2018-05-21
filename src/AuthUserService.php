@@ -20,19 +20,27 @@ class AuthUserService
 
     public function getUserIdentity(): string
     {
-        return $this->getSession()->getIdentity();
+        if(!$this->getSession()){
+            return '';
+        }
+        return $this->getSession()->getIdentity() ?? '';
     }
 
 
     public function getUserExtendData(): array
     {
-        return $this->getSession()->getExtendedData();
+        if(!$this->getSession()){
+            return [];
+        }
+        return $this->getSession()->getExtendedData() ?? [];
     }
 
-
-    public function getSession(): AuthSession
+    /**
+     * @return AuthSession |null
+     */
+    public function getSession()
     {
-        return RequestContext::getContextDataByKey(AuthConstants::AUTH_SESSION);
+        return RequestContext::getContextDataByKey(AuthConstants::AUTH_SESSION) ?? null;
     }
 
     /**

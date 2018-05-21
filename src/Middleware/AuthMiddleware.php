@@ -15,8 +15,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft\App;
 use Swoft\Auth\Parser\AuthorizationHeaderParser;
+use Swoft\Bean\Annotation\Bean;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 
+/**
+ * Class AuthMiddleware
+ * @package Swoft\Auth\Middleware
+ * @Bean()
+ */
 class AuthMiddleware implements MiddlewareInterface
 {
 

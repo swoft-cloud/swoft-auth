@@ -9,9 +9,13 @@
 
 namespace Swoft\Auth\Helper;
 
-use Swoft\Bean\Annotation\Value;
-use Swoft\Helper\ArrayHelper;
+use Swoft\Bean\Annotation\Bean;
 
+/**
+ * Class ErrorCodeHelper
+ * @package Swoft\Auth\Helper
+ * @Bean()
+ */
 class ErrorCodeHelper
 {
 
@@ -110,8 +114,7 @@ class ErrorCodeHelper
      * @param $code
      * @param $message
      * @param $statusCode
-     *
-     * @return static
+     * @return ErrorCodeHelper
      */
     public function error($code, $message, $statusCode)
     {

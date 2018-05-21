@@ -61,7 +61,7 @@ class AuthSession
      * @param string $identity
      * @return AuthSession
      */
-    public function setIdentity(string $identity): AuthSession
+    public function setIdentity(string $identity)
     {
         $this->identity = $identity;
         return $this;
@@ -79,7 +79,7 @@ class AuthSession
      * @param string $accountTypeName
      * @return AuthSession
      */
-    public function setAccountTypeName(string $accountTypeName): AuthSession
+    public function setAccountTypeName(string $accountTypeName)
     {
         $this->accountTypeName = $accountTypeName;
         return $this;
@@ -97,7 +97,7 @@ class AuthSession
      * @param string $token
      * @return AuthSession
      */
-    public function setToken(string $token): AuthSession
+    public function setToken(string $token)
     {
         $this->token = $token;
         return $this;
@@ -115,7 +115,7 @@ class AuthSession
      * @param int $createTime
      * @return AuthSession
      */
-    public function setCreateTime(int $createTime): AuthSession
+    public function setCreateTime(int $createTime)
     {
         $this->createTime = $createTime;
         return $this;
@@ -133,7 +133,7 @@ class AuthSession
      * @param int $expirationTime
      * @return AuthSession
      */
-    public function setExpirationTime(int $expirationTime): AuthSession
+    public function setExpirationTime(int $expirationTime)
     {
         $this->expirationTime = $expirationTime;
         return $this;
@@ -151,7 +151,7 @@ class AuthSession
      * @param array $extendedData
      * @return AuthSession
      */
-    public function setExtendedData(array $extendedData): AuthSession
+    public function setExtendedData(array $extendedData)
     {
         $this->extendedData = $extendedData;
         return $this;

@@ -37,10 +37,12 @@ class AuthResult
 
     /**
      * @param string $identity
+     * @return AuthResult
      */
     public function setIdentity(string $identity)
     {
         $this->identity = $identity;
+        return $this;
     }
 
     /**
@@ -53,10 +55,12 @@ class AuthResult
 
     /**
      * @param array $extendedData
+     * @return AuthResult
      */
-    public function setExtendedData(array $extendedData): void
+    public function setExtendedData(array $extendedData)
     {
         $this->extendedData = $extendedData;
+        return $this;
     }
 
 
