@@ -14,9 +14,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Auth\AuthManager;
 use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Constants\ServiceConstants;
+use Swoft\Auth\Exception\AuthException;
+use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthHandleInterface;
+use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Bean\Annotation\Bean;
+use Swoft\Bean\Annotation\Value;
 
 /**
  * Class BearerTokenParser
@@ -28,14 +31,24 @@ class BearerTokenParser implements AuthHandleInterface
     const NAME = 'Bearer';
 
     /**
+     * @Value("${config.auth.manager}")
+     * @var string
+     */
+    private $managerClass = AuthManager::class;
+
+    /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @return \Psr\Http\Message\ServerRequestInterface
      */
     public function parse(ServerRequestInterface $request): ServerRequestInterface
     {
         $token = $this->getToken($request);
-        /** @var AuthManager $manager */
-        $manager = App::getBean(ServiceConstants::AUTH_MANAGER);
+        if (!App::hasBean($this->managerClass)) {
+            $error = sprintf('can`t find  %s', $this->managerClass);
+            throw new AuthException(ErrorCode::POST_DATA_INVALID, $error);
+        }
+        /** @var AuthManagerInterface $manager */
+        $manager = App::getBean($this->managerClass);
         if ($token) {
             $res = $manager->authenticateToken($token);
             $request = $request->withAttribute(AuthConstants::IS_LOGIN, $res);

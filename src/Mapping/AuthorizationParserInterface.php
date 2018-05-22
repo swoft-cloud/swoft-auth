@@ -8,7 +8,7 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace Swoft\Auth\Parser;
+namespace Swoft\Auth\Mapping;
 
 use Psr\Http\Message\ServerRequestInterface;
 

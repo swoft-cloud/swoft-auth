@@ -15,13 +15,14 @@ use Swoft\Auth\Bean\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
+use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Core\RequestContext;
 
 /**
  * Class AuthUserService
  * @package Swoft\Auth
  */
-class AuthUserService
+class AuthUserService implements AuthServiceInterface
 {
     public function getUserIdentity(): string
     {

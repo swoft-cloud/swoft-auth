@@ -19,16 +19,16 @@ use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AccountTypeInterface;
+use Swoft\Auth\Mapping\AuthManagerInterface;
+use Swoft\Auth\Mapping\TokenParserInterface;
 use Swoft\Auth\Parser\JWTTokenParser;
-use Swoft\Auth\Parser\TokenParserInterface;
-use Swoft\Bean\Annotation\Value;
 use Swoft\Core\RequestContext;
 
 /**
  * Class AuthManager
  * @package Swoft\Auth
  */
-class AuthManager
+class AuthManager implements AuthManagerInterface
 {
     /**
      * @var string
@@ -93,7 +93,7 @@ class AuthManager
      * @param array $data
      * @return AuthSession
      */
-    public function login(string $accountTypeName, array $data)
+    public function login(string $accountTypeName, array $data):AuthSession
     {
         if (!$account = $this->getAccountType($accountTypeName)) {
             throw new AuthException(ErrorCode::AUTH_INVALID_ACCOUNT_TYPE);
@@ -183,7 +183,7 @@ class AuthManager
      * @return bool
      * @throws AuthException
      */
-    public function authenticateToken($token)
+    public function authenticateToken(string $token):bool
     {
         try {
             /** @var AuthSession $session */
