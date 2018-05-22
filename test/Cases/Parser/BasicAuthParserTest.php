@@ -14,4 +14,6 @@ use SwoftTest\Auth\AbstractTestCase;
 
 class BasicAuthParserTest extends AbstractTestCase
 {
+
+
 }

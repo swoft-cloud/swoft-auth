@@ -36,3 +36,4 @@ return PhpCsFixer\Config::create()
             ->in(__DIR__)
     )
     ->setUsingCache(false);
+

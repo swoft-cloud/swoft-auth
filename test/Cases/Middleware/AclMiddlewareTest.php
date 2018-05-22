@@ -14,4 +14,5 @@ use SwoftTest\Auth\AbstractTestCase;
 
 class AclMiddlewareTest extends AbstractTestCase
 {
+
 }

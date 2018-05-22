@@ -18,3 +18,4 @@ before_script:
   - composer update
 
 script: composer test
+

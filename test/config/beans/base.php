@@ -7,4 +7,10 @@
  * @contact  group@swoft.org
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
-return [];
+return [
+    'serverDispatcher' => [
+        'middlewares' => [
+            \Swoft\Auth\Middleware\AuthMiddleware::class,
+        ]
+    ],
+];
