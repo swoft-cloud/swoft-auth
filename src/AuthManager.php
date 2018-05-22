@@ -22,7 +22,6 @@ use Swoft\Auth\Mapping\AccountTypeInterface;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Auth\Mapping\TokenParserInterface;
 use Swoft\Auth\Parser\JWTTokenParser;
-use Swoft\Bean\Annotation\Value;
 use Swoft\Core\RequestContext;
 use Swoft\Exception\RuntimeException;
 
@@ -47,23 +46,24 @@ class AuthManager implements AuthManagerInterface
      */
     protected $cacheEnable = false;
 
-
-    protected $cacheClass;
-
     /**
      * @var CacheInterface
      */
-    protected $cache;
+    private $cache;
 
     /**
-     * @Value("${config.auth.tokenParser}")
+     * @var string
+     */
+    protected $cacheClass = '';
+
+    /**
      * @var string
      */
     protected $tokenParserClass = JWTTokenParser::class;
     /**
      * @var TokenParserInterface
      */
-    protected $tokenParser;
+    private $tokenParser;
 
     public function getSessionDuration()
     {
@@ -175,23 +175,29 @@ class AuthManager implements AuthManagerInterface
 
     public function getTokenParser(): TokenParserInterface
     {
-        if($this->tokenParser instanceof TokenParserInterface){
-            return $this->tokenParser;
+        if(!$this->tokenParser instanceof TokenParserInterface){
+            if(!App::hasBean($this->tokenParserClass)){
+                throw new RuntimeException(sprintf("can`t find %s",$this->tokenParserClass));
+            }
+            $tokenParser = App::getBean($this->tokenParserClass);
+            if(!$tokenParser instanceof TokenParserInterface){
+                throw new RuntimeException(sprintf("%s need implements TokenParserInterface ",$this->tokenParserClass));
+            }
+            $this->tokenParser = $tokenParser;
         }
-        if(!App::hasBean($this->tokenParserClass)){
-            throw new RuntimeException("can`t find %s",$this->tokenParserClass);
-        }
-        $tokenParser = App::getBean($this->tokenParserClass);
-        if(!$tokenParser instanceof TokenParserInterface){
-            throw new RuntimeException("%s need implements TokenParserInterface ",$this->tokenParserClass);
-        }
-        $this->tokenParser = $tokenParser;
         return $this->tokenParser;
     }
 
     public function getCacheClient(){
         if(!$this->cache instanceof CacheInterface){
-            throw new RuntimeException(" AuthManager need cache client");
+            if(!App::hasBean($this->cacheClass)){
+                throw new RuntimeException(sprintf("can`t find %s",$this->cacheClass));
+            }
+            $cache = App::getBean($this->cacheClass);
+            if(!$cache instanceof CacheInterface){
+                throw new RuntimeException(sprintf("%s need implements CacheInterface ",$this->cacheClass));
+            }
+            $this->cache = $cache;
         }
         return $this->cache;
     }

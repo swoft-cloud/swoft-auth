@@ -14,14 +14,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft\App;
-use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Bean\Annotation\Bean;
-use Swoft\Bean\Annotation\Value;
-use Swoft\Exception\RuntimeException;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 
 /**

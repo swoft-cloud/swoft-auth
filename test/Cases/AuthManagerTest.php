@@ -9,6 +9,7 @@
  */
 
 namespace SwoftTest\Auth;
+use Swoft\Auth\AuthManager;
 
 /**
  * Class AuthManagerTest
@@ -16,6 +17,19 @@ namespace SwoftTest\Auth;
  */
 class AuthManagerTest extends AbstractTestCase
 {
+    /**
+     * @test
+     * @covers AuthManager::login()
+     */
+    public function testLogin(){
 
+    }
 
+    /**
+     * @test
+     * @covers AuthManager::authenticateToken()
+     */
+    public function testAuthenticateToken(){
+
+    }
 }

@@ -18,7 +18,10 @@ return [
     ],
     'env'               => 'Base',
     'auth' =>[
-        'cache'=>''
+        'jwt'=>[
+            'algorithm'=>'HS256',
+            'secret'=>'1231231'
+        ]
     ],
     'Service'           => [
         'user' => [

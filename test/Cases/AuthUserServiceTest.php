@@ -18,5 +18,6 @@ class AuthUserServiceTest extends AbstractTestCase
      */
     public function testGetSession()
     {
+
     }
 }

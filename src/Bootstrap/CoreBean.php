@@ -14,6 +14,7 @@ use Swoft\Auth\AuthManager;
 use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Parser\AuthorizationHeaderParser;
+use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Bean\Annotation\BootBean;
 use Swoft\Core\BootBeanInterface;
 
@@ -34,7 +35,8 @@ class CoreBean implements BootBeanInterface
                 'class' => AuthorizationHeaderParser::class
             ],
             ServiceConstants::AUTH_MANAGER=>[
-                'class' => AuthManager::class
+                'class' => AuthManager::class,
+                'tokenParserClass'=>JWTTokenParser::class,
             ],
             ServiceConstants::AUTH_USERS_SERVICE=>[
                 'class'=>AuthUserService::class
