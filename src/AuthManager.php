@@ -31,31 +31,26 @@ use Swoft\Core\RequestContext;
 class AuthManager
 {
     /**
-     * @Value("${config.auth.cache.prefix}")
      * @var string
      */
-    private $prefix = 'token_';
+    protected $prefix = 'swoft.token.';
 
     /**
      * @var int
-     * @Value("${config.auth.token.lifetime}")
      */
     protected $sessionDuration = 86400;
 
     /**
      * @var bool
-     * @Value("${config.auth.cache.enable}")
      */
     protected $cacheEnable = false;
 
     /**
-     * @Value("${config.auth.cache}")
      * @var CacheInterface
      */
     protected $cache;
 
     /**
-     * @Value("${config.auth.token.parser}")
      * @var TokenParserInterface
      */
     protected $tokenParser;
@@ -103,19 +98,21 @@ class AuthManager
         if (!$account = $this->getAccountType($accountTypeName)) {
             throw new AuthException(ErrorCode::AUTH_INVALID_ACCOUNT_TYPE);
         }
-        /** @var AuthResult $result */
         $result = $account->login($data);
-        if (!$result) {
+        if (!$result instanceof AuthResult || $result->getIdentity() == '') {
             throw new AuthException(ErrorCode::AUTH_LOGIN_FAILED);
         }
-        $identity = $result->getIdentity();
-        $session = $this->generateSession($accountTypeName, $identity, $data);
+        $session = $this->generateSession($accountTypeName, $result->getIdentity(), $result->getExtendedData());
         $this->setSession($session);
         if ($this->cacheEnable === true) {
             try {
-                $this->cache->set($this->getCacheKey($identity), $session->getToken(), $session->getExpirationTime());
+                $this->getCacheClient()->set(
+                    $this->getCacheKey($result->getIdentity()),
+                    $session->getToken(),
+                    $session->getExpirationTime()
+                );
             } catch (InvalidArgumentException $e) {
-                $err = sprintf('%s 参数无效', $session->getIdentity());
+                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(),$e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
@@ -168,10 +165,17 @@ class AuthManager
 
     public function getTokenParser(): TokenParserInterface
     {
-        if (empty($this->tokenParser)) {
+        if (!$this->tokenParser instanceof TokenParserInterface) {
             $this->tokenParser = App::getBean(JWTTokenParser::class);
         }
         return $this->tokenParser;
+    }
+
+    public function getCacheClient(){
+        if(!$this->cache instanceof CacheInterface){
+            throw new AuthException(ErrorCode::POST_DATA_INVALID,"AuthManager need cache client");
+        }
+        return $this->cache;
     }
 
     /**
@@ -206,12 +210,12 @@ class AuthManager
 
         if ($this->cacheEnable === true) {
             try {
-                $cache = $this->cache->get($this->getCacheKey($session->getIdentity()));
+                $cache = $this->getCacheClient()->get($this->getCacheKey($session->getIdentity()));
                 if (!$cache || $cache !== $token) {
                     throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
                 }
             } catch (InvalidArgumentException $e) {
-                $err = sprintf('%s 参数无效', $session->getIdentity());
+                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(),$e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }

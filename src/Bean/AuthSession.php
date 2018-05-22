@@ -48,7 +48,7 @@ class AuthSession
     /**
      * @var array Expand data, define it yourself
      */
-    protected $extendedData=[];
+    protected $extendedData=null;
 
     /**
      * @return string
@@ -143,16 +143,16 @@ class AuthSession
     /**
      * @return array
      */
-    public function getExtendedData(): array
+    public function getExtendedData()
     {
         return $this->extendedData;
     }
 
     /**
-     * @param array $extendedData
+     * @param  $extendedData
      * @return AuthSession
      */
-    public function setExtendedData(array $extendedData)
+    public function setExtendedData($extendedData)
     {
         $this->extendedData = $extendedData;
         return $this;

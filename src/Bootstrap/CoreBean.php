@@ -32,9 +32,6 @@ class CoreBean implements BootBeanInterface
             ServiceConstants::AUTH_REQUEST_HEADER_PARSER => [
                 'class' => AuthorizationHeaderParser::class
             ],
-            ServiceConstants::AUTH_MANAGER => [
-                'class' => AuthManager::class
-            ]
         ];
     }
 }

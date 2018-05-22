@@ -10,8 +10,11 @@
 
 namespace Swoft\Auth;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\Bean\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
+use Swoft\Auth\Exception\AuthException;
+use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Core\RequestContext;
 
 /**
@@ -45,16 +48,36 @@ class AuthUserService
     }
 
     /**
-     * @param string $controller 控制器名
-     * @param string $action 方法名
+     * <code>
+     * $controller = $this->getHandlerArray($requestHandler)[0];
+     * $method = $this->getHandlerArray($requestHandler)[1];
+     * $id = $this->getUserIdentity();
+     * if ($id) {
+     * return true;
+     * }
+     * return false;
+     * </code>
+     *
+     * @param string $requestHandler
+     * @param ServerRequestInterface $request
      * @return bool
      */
-    public function auth(string $controller, string $action): bool
+    public function auth(string $requestHandler, ServerRequestInterface $request): bool
     {
-        $id = $this->getUserIdentity();
-        if ($id) {
-            return true;
-        }
-        return false;
+       throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,"you need copy AuthUserService::auth method");
     }
+
+    /**
+     * @param string $handler
+     * @return array|null
+     */
+    protected function getHandlerArray(string $handler)
+    {
+        $segments = explode('@', trim($handler));
+        if (!isset($segments[1])) {
+            return null;
+        }
+        return $segments;
+    }
+
 }

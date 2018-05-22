@@ -39,33 +39,18 @@ class AclMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
-        $handlerArray = self::getHandlerArray($requestHandler);
-        if ($requestHandler && is_array($handlerArray)) {
-            if (!App::hasBean(ServiceConstants::AUTH_USERS_SERVICE)) {
-                $error = sprintf('need AuthUserService %s', $requestHandler);
-                throw new AuthException(ErrorCode::POST_DATA_INVALID, $error);
-            }
-            /** @var AuthUserService $service */
-            $service = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
-            $flag = $service->auth($handlerArray[0], $handlerArray[1]);
-            if (!$flag) {
-                throw new AuthException(ErrorCode::ACCESS_DENIED);
-            }
+        if (!App::hasBean(ServiceConstants::AUTH_USERS_SERVICE)) {
+            $error = sprintf('need AuthUserService %s', $requestHandler);
+            throw new AuthException(ErrorCode::POST_DATA_INVALID, $error);
+        }
+        /** @var AuthUserService $service */
+        $service = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
+        $flag = $service->auth($requestHandler,$request);
+        if (!$flag) {
+            throw new AuthException(ErrorCode::ACCESS_DENIED);
         }
         $response = $handler->handle($request);
         return $response;
     }
 
-    /**
-     * @param string $handler
-     * @return array|null
-     */
-    public static function getHandlerArray(string $handler)
-    {
-        $segments = explode('@', trim($handler));
-        if (!isset($segments[1])) {
-            return null;
-        }
-        return $segments;
-    }
 }
