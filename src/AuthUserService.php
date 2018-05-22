@@ -13,8 +13,6 @@ namespace Swoft\Auth;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\Bean\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Core\RequestContext;
 
@@ -65,7 +63,8 @@ class AuthUserService implements AuthServiceInterface
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool
     {
-       throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,"you need copy AuthUserService::auth method");
+        echo sprintf(" 你访问了: %s",$requestHandler);
+        return true;
     }
 
     /**

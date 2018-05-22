@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft\App;
 use Swoft\Auth\AuthUserService;
+use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthServiceInterface;
@@ -30,11 +31,6 @@ use Swoft\Http\Message\Middleware\MiddlewareInterface;
  */
 class AclMiddleware implements MiddlewareInterface
 {
-    /**
-     * @Value("${config.auth.service}")
-     * @var string
-     */
-    private $serviceClass = AuthUserService::class;
 
     /**
      * Process an incoming server request and return a response, optionally delegating
@@ -47,11 +43,8 @@ class AclMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
-        if (!App::hasBean($this->serviceClass)) {
-            throw new RuntimeException(sprintf('can`t find %s', $this->serviceClass));
-        }
         /** @var AuthServiceInterface $service */
-        $service = App::getBean($this->serviceClass);
+        $service = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
         if (!$service->auth($requestHandler,$request)) {
             throw new AuthException(ErrorCode::ACCESS_DENIED);
         }

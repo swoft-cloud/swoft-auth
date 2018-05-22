@@ -14,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Auth\AuthManager;
 use Swoft\Auth\Constants\AuthConstants;
+use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Mapping\AuthHandleInterface;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Bean\Annotation\Bean;
@@ -30,23 +31,14 @@ class BearerTokenParser implements AuthHandleInterface
     const NAME = 'Bearer';
 
     /**
-     * @Value("${config.auth.manager}")
-     * @var string
-     */
-    private $managerClass = AuthManager::class;
-
-    /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @return \Psr\Http\Message\ServerRequestInterface
      */
     public function parse(ServerRequestInterface $request): ServerRequestInterface
     {
         $token = $this->getToken($request);
-        if (!App::hasBean($this->managerClass)) {
-            throw new RuntimeException(sprintf('can`t find  %s', $this->managerClass));
-        }
         /** @var AuthManagerInterface $manager */
-        $manager = App::getBean($this->managerClass);
+        $manager = App::getBean(ServiceConstants::AUTH_MANAGER);
         if ($token) {
             $res = $manager->authenticateToken($token);
             $request = $request->withAttribute(AuthConstants::IS_LOGIN, $res);
