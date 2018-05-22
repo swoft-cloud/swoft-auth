@@ -22,7 +22,9 @@ use Swoft\Auth\Mapping\AccountTypeInterface;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Auth\Mapping\TokenParserInterface;
 use Swoft\Auth\Parser\JWTTokenParser;
+use Swoft\Bean\Annotation\Value;
 use Swoft\Core\RequestContext;
+use Swoft\Exception\RuntimeException;
 
 /**
  * Class AuthManager
@@ -45,11 +47,19 @@ class AuthManager implements AuthManagerInterface
      */
     protected $cacheEnable = false;
 
+
+    protected $cacheClass;
+
     /**
      * @var CacheInterface
      */
     protected $cache;
 
+    /**
+     * @Value("${config.auth.tokenParser}")
+     * @var string
+     */
+    protected $tokenParserClass = JWTTokenParser::class;
     /**
      * @var TokenParserInterface
      */
@@ -165,15 +175,23 @@ class AuthManager implements AuthManagerInterface
 
     public function getTokenParser(): TokenParserInterface
     {
-        if (!$this->tokenParser instanceof TokenParserInterface) {
-            $this->tokenParser = App::getBean(JWTTokenParser::class);
+        if($this->tokenParser instanceof TokenParserInterface){
+            return $this->tokenParser;
         }
+        if(!App::hasBean($this->tokenParserClass)){
+            throw new RuntimeException("can`t find %s",$this->tokenParserClass);
+        }
+        $tokenParser = App::getBean($this->tokenParserClass);
+        if(!$tokenParser instanceof TokenParserInterface){
+            throw new RuntimeException("%s need implements TokenParserInterface ",$this->tokenParserClass);
+        }
+        $this->tokenParser = $tokenParser;
         return $this->tokenParser;
     }
 
     public function getCacheClient(){
         if(!$this->cache instanceof CacheInterface){
-            throw new AuthException(ErrorCode::POST_DATA_INVALID,"AuthManager need cache client");
+            throw new RuntimeException(" AuthManager need cache client");
         }
         return $this->cache;
     }

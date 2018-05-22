@@ -15,12 +15,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft\App;
 use Swoft\Auth\AuthUserService;
-use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Annotation\Value;
+use Swoft\Exception\RuntimeException;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 
 /**
@@ -48,8 +48,7 @@ class AclMiddleware implements MiddlewareInterface
     {
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
         if (!App::hasBean($this->serviceClass)) {
-            $error = sprintf('can`t find %s', $this->serviceClass);
-            throw new AuthException(ErrorCode::POST_DATA_INVALID, $error);
+            throw new RuntimeException(sprintf('can`t find %s', $this->serviceClass));
         }
         /** @var AuthServiceInterface $service */
         $service = App::getBean($this->serviceClass);

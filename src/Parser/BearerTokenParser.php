@@ -14,12 +14,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Auth\AuthManager;
 use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthHandleInterface;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Annotation\Value;
+use Swoft\Exception\RuntimeException;
 
 /**
  * Class BearerTokenParser
@@ -44,8 +43,7 @@ class BearerTokenParser implements AuthHandleInterface
     {
         $token = $this->getToken($request);
         if (!App::hasBean($this->managerClass)) {
-            $error = sprintf('can`t find  %s', $this->managerClass);
-            throw new AuthException(ErrorCode::POST_DATA_INVALID, $error);
+            throw new RuntimeException(sprintf('can`t find  %s', $this->managerClass));
         }
         /** @var AuthManagerInterface $manager */
         $manager = App::getBean($this->managerClass);
