@@ -7,11 +7,13 @@
  * @contact  group@swoft.org
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
+
+
 return [
     'version'           => '1.0',
     'autoInitBean'      => true,
     'beanScan'          => [
-        'Swoft\\Http\\Server\\Test\\Testing' => BASE_PATH.'/Testing'
+       "Swoft\\Auth"=>'@root/../src'
     ],
     'I18n'              => [
         'sourceLanguage' => '@root/resources/messages/',

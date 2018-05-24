@@ -15,5 +15,9 @@ use SwoftTest\Auth\AbstractTestCase;
 class BasicAuthParserTest extends AbstractTestCase
 {
 
+    public function testParser(){
+        $request = $this->raw("get","test",[],['Authorization'=>'Basic 1'],"test");
+        var_dump($request);
+    }
 
 }

@@ -7,13 +7,8 @@
  * @contact  group@swoft.org
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
-if (file_exists($file = dirname(__DIR__, 3) . '/autoload.php')) {
-    require $file;
-} elseif (file_exists($file = dirname(__DIR__) . '/vendor/autoload.php')) {
-    require $file;
-} else {
-    exit('OO, The composer autoload file is not found!');
-}
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 require_once __DIR__ . '/config/define.php';
 

@@ -48,7 +48,7 @@ class AuthSession
     /**
      * @var array Expand data, define it yourself
      */
-    protected $extendedData=null;
+    protected $extendedData=[];
 
     /**
      * @return string
