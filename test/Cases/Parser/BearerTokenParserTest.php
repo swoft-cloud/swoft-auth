@@ -37,6 +37,7 @@ class BearerTokenParserTest extends AbstractTestCase
      * @covers AuthManager::authenticateToken()
      * @covers BearerTokenParser::parse()
      * @covers AuthAccount::authenticate()
+     * @covers AuthUserService::getSession()
      */
     public function testParse()
     {
