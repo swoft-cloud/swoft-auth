@@ -60,6 +60,7 @@ class AuthManager implements AuthManagerInterface
      * @var string
      */
     protected $tokenParserClass = JWTTokenParser::class;
+
     /**
      * @var TokenParserInterface
      */
@@ -122,7 +123,7 @@ class AuthManager implements AuthManagerInterface
                     $session->getExpirationTime()
                 );
             } catch (InvalidArgumentException $e) {
-                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(),$e->getMessage());
+                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(), $e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
@@ -175,27 +176,28 @@ class AuthManager implements AuthManagerInterface
 
     public function getTokenParser(): TokenParserInterface
     {
-        if(!$this->tokenParser instanceof TokenParserInterface){
-            if(!App::hasBean($this->tokenParserClass)){
-                throw new RuntimeException(sprintf("can`t find %s",$this->tokenParserClass));
+        if (!$this->tokenParser instanceof TokenParserInterface) {
+            if (!App::hasBean($this->tokenParserClass)) {
+                throw new RuntimeException(sprintf('can`t find %s', $this->tokenParserClass));
             }
             $tokenParser = App::getBean($this->tokenParserClass);
-            if(!$tokenParser instanceof TokenParserInterface){
-                throw new RuntimeException(sprintf("%s need implements TokenParserInterface ",$this->tokenParserClass));
+            if (!$tokenParser instanceof TokenParserInterface) {
+                throw new RuntimeException(sprintf('%s need implements TokenParserInterface ', $this->tokenParserClass));
             }
             $this->tokenParser = $tokenParser;
         }
         return $this->tokenParser;
     }
 
-    public function getCacheClient(){
-        if(!$this->cache instanceof CacheInterface){
-            if(!App::hasBean($this->cacheClass)){
-                throw new RuntimeException(sprintf("can`t find %s",$this->cacheClass));
+    public function getCacheClient()
+    {
+        if (!$this->cache instanceof CacheInterface) {
+            if (!App::hasBean($this->cacheClass)) {
+                throw new RuntimeException(sprintf('can`t find %s', $this->cacheClass));
             }
             $cache = App::getBean($this->cacheClass);
-            if(!$cache instanceof CacheInterface){
-                throw new RuntimeException(sprintf("%s need implements CacheInterface ",$this->cacheClass));
+            if (!$cache instanceof CacheInterface) {
+                throw new RuntimeException(sprintf('%s need implements CacheInterface ', $this->cacheClass));
             }
             $this->cache = $cache;
         }
@@ -239,7 +241,7 @@ class AuthManager implements AuthManagerInterface
                     throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
                 }
             } catch (InvalidArgumentException $e) {
-                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(),$e->getMessage());
+                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(), $e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }

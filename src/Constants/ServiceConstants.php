@@ -12,7 +12,7 @@ namespace Swoft\Auth\Constants;
 
 class ServiceConstants
 {
-    const AUTH_REQUEST_HEADER_PARSER = 'AuthRequestHeaderParser';
+    const AUTH_REQUEST_HEADER_PARSER = 'AuthorizationRequestHeaderParser';
 
     const AUTH_MANAGER = 'AuthManager';
 

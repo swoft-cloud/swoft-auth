@@ -13,6 +13,7 @@ namespace SwoftTest\Auth;
 use PHPUnit\Framework\TestCase;
 use Swoft\App;
 use Swoft\Helper\ArrayHelper;
+use Swoft\Http\Server\Router\HandlerMapping;
 use Swoft\Testing\SwooleRequest as TestSwooleRequest;
 use Swoft\Testing\SwooleResponse as TestSwooleResponse;
 use Swoft\Http\Message\Testing\Web\Request;
@@ -30,14 +31,24 @@ class AbstractTestCase extends TestCase
 
     const ACCEPT_RAW = 'text/plain';
 
+    protected function registerRoute()
+    {
+        /** @var HandlerMapping $router */
+        $router = App::getBean('httpRouter');
+
+        $router->get('/', function () {
+            return [1];
+        });
+    }
+
     /**
      * Send a mock request
      *
      * @param string $method
      * @param string $uri
-     * @param array  $parameters
+     * @param array $parameters
      * @param string $accept
-     * @param array  $headers
+     * @param array $headers
      * @param string $rawContent
      * @return bool|\Swoft\Http\Message\Testing\Web\Response
      */
@@ -52,7 +63,7 @@ class AbstractTestCase extends TestCase
         $method = strtoupper($method);
         $swooleResponse = new TestSwooleResponse();
         $swooleRequest = new TestSwooleRequest();
-
+        $this->registerRoute();
         $this->buildMockRequest($method, $uri, $parameters, $accept, $swooleRequest, $headers);
 
         $swooleRequest->setRawContent($rawContent);
@@ -70,8 +81,8 @@ class AbstractTestCase extends TestCase
      *
      * @param string $method
      * @param string $uri
-     * @param array  $parameters
-     * @param array  $headers
+     * @param array $parameters
+     * @param array $headers
      * @param string $rawContent
      * @return bool|\Swoft\Http\Message\Testing\Web\Response
      */
@@ -90,8 +101,8 @@ class AbstractTestCase extends TestCase
      *
      * @param string $method
      * @param string $uri
-     * @param array  $parameters
-     * @param array  $headers
+     * @param array $parameters
+     * @param array $headers
      * @param string $rawContent
      * @return bool|\Swoft\Http\Message\Testing\Web\Response
      */
@@ -110,8 +121,8 @@ class AbstractTestCase extends TestCase
      *
      * @param string $method
      * @param string $uri
-     * @param array  $parameters
-     * @param array  $headers
+     * @param array $parameters
+     * @param array $headers
      * @param string $rawContent
      * @return bool|\Swoft\Http\Message\Testing\Web\Response
      */
@@ -126,12 +137,12 @@ class AbstractTestCase extends TestCase
     }
 
     /**
-     * @param string               $method
-     * @param string               $uri
-     * @param array                $parameters
-     * @param string               $accept
+     * @param string $method
+     * @param string $uri
+     * @param array $parameters
+     * @param string $accept
      * @param \Swoole\Http\Request $swooleRequest
-     * @param array                $headers
+     * @param array $headers
      */
     protected function buildMockRequest(
         string $method,
@@ -147,31 +158,31 @@ class AbstractTestCase extends TestCase
             parse_str($urlAry['query'], $urlParams);
         }
         $defaultHeaders = [
-            'host'                      => '127.0.0.1',
-            'connection'                => 'keep-alive',
-            'cache-control'             => 'max-age=0',
-            'user-agent'                => 'PHPUnit',
+            'host' => '127.0.0.1',
+            'connection' => 'keep-alive',
+            'cache-control' => 'max-age=0',
+            'user-agent' => 'PHPUnit',
             'upgrade-insecure-requests' => '1',
-            'accept'                    => $accept,
-            'dnt'                       => '1',
-            'accept-encoding'           => 'gzip, deflate, br',
-            'accept-language'           => 'zh-CN,zh;q=0.8,en;q=0.6,it-IT;q=0.4,it;q=0.2',
+            'accept' => $accept,
+            'dnt' => '1',
+            'accept-encoding' => 'gzip, deflate, br',
+            'accept-language' => 'zh-CN,zh;q=0.8,en;q=0.6,it-IT;q=0.4,it;q=0.2',
         ];
 
         $swooleRequest->fd = 1;
         $swooleRequest->header = ArrayHelper::merge($headers, $defaultHeaders);
         $swooleRequest->server = [
-            'request_method'     => $method,
-            'request_uri'        => $uri,
-            'path_info'          => '/',
-            'request_time'       => microtime(),
+            'request_method' => $method,
+            'request_uri' => $uri,
+            'path_info' => '/',
+            'request_time' => microtime(),
             'request_time_float' => microtime(true),
-            'server_port'        => 80,
-            'remote_port'        => 54235,
-            'remote_addr'        => '10.0.2.2',
-            'master_time'        => microtime(),
-            'server_protocol'    => 'HTTP/1.1',
-            'server_software'    => 'swoole-http-server',
+            'server_port' => 80,
+            'remote_port' => 54235,
+            'remote_addr' => '10.0.2.2',
+            'master_time' => microtime(),
+            'server_protocol' => 'HTTP/1.1',
+            'server_software' => 'swoole-http-server',
         ];
 
         if ($method == 'GET') {
@@ -180,7 +191,7 @@ class AbstractTestCase extends TestCase
             $swooleRequest->post = $parameters;
         }
 
-        if (! empty($urlParams)) {
+        if (!empty($urlParams)) {
             $get = empty($swooleRequest->get) ? [] : $swooleRequest->get;
             $swooleRequest->get = array_merge($urlParams, $get);
         }

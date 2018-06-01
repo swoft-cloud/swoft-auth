@@ -10,7 +10,6 @@
 
 namespace SwoftTest\Auth\Helper;
 
-use Swoft\App;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Helper\ErrorCodeHelper;
 use SwoftTest\Auth\AbstractTestCase;
@@ -21,9 +20,10 @@ class ErrorCodeHelperTest extends AbstractTestCase
      * @test
      * @covers ErrorCodeHelper::get()
      */
-    public function testGet(){
+    public function testGet()
+    {
         $helper = new ErrorCodeHelper();
         $arr = $helper->get(ErrorCode::ACCESS_DENIED);
-        $this->assertArrayHasKey('statusCode',$arr);
+        $this->assertArrayHasKey('statusCode', $arr);
     }
 }

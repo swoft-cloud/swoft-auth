@@ -8,24 +8,27 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-
 return [
-    'version'           => '1.0',
-    'autoInitBean'      => true,
-    'beanScan'          => [
-       "Swoft\\Auth"=>'@root/../src'
+    'version' => '1.0',
+    'autoInitBean' => true,
+    'bootScan' => [
+        'Swoft\\Auth' => BASE_PATH . '/../src',
     ],
-    'I18n'              => [
+    'beanScan' => [
+        'Swoft\\Auth' => BASE_PATH . '/../src',
+        'SwoftTest\\Auth\\'=> BASE_PATH .'/Cases/Base'
+    ],
+    'I18n' => [
         'sourceLanguage' => '@root/resources/messages/',
     ],
-    'env'               => 'Base',
-    'auth' =>[
-        'jwt'=>[
-            'algorithm'=>'HS256',
-            'secret'=>'1231231'
+    'env' => 'Base',
+    'auth' => [
+        'jwt' => [
+            'algorithm' => 'HS256',
+            'secret' => '1231231'
         ]
     ],
-    'Service'           => [
+    'Service' => [
         'user' => [
             'timeout' => 3000
         ]

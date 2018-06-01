@@ -10,14 +10,41 @@
 
 namespace SwoftTest\Auth\Parser;
 
+use Swoft\App;
+use Swoft\Auth\Constants\AuthConstants;
+use Swoft\Auth\Parser\BasicAuthParser;
+use Swoft\Http\Message\Server\Request;
+use Swoft\Http\Server\Router\HandlerMapping;
 use SwoftTest\Auth\AbstractTestCase;
 
+/**
+ * Class BasicAuthParserTest
+ * @package SwoftTest\Auth\Parser
+ */
 class BasicAuthParserTest extends AbstractTestCase
 {
-
-    public function testParser(){
-        $request = $this->raw("get","test",[],['Authorization'=>'Basic 1'],"test");
-        var_dump($request);
+    protected function registerRoute()
+    {
+        /** @var HandlerMapping $router */
+        $router = App::getBean('httpRouter');
+        $router->get('/', function (Request $request) {
+            $name = $request->getAttribute(AuthConstants::BASIC_USER_NAME);
+            $pd = $request->getAttribute(AuthConstants::BASIC_PASSWORD);
+            return ['username' => $name, 'password' => $pd];
+        });
     }
 
+    /**
+     * @test
+     * @covers BasicAuthParser::parse()
+     */
+    public function testParser()
+    {
+        $username = 'user';
+        $password = '123';
+        $parser = base64_encode($username . ':' . $password);
+        $response = $this->request('GET', '/', [], self::ACCEPT_JSON, ['Authorization' => 'Basic ' . $parser], 'test');
+        $res = $response->getBody()->getContents();
+        $this->assertEquals(json_decode($res, true), ['username' => $username, 'password' => $password]);
+    }
 }

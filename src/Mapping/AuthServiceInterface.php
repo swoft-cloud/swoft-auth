@@ -1,20 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sl
- * Date: 2018/5/22
- * Time: 下午9:21
- * @author April2 <ott321@yeah.net>
+ * This file is part of Swoft.
+ *
+ * @link     https://swoft.org
+ * @document https://doc.swoft.org
+ * @contact  group@swoft.org
+ * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace Swoft\Auth\Mapping;
-
 
 use Psr\Http\Message\ServerRequestInterface;
 
 interface AuthServiceInterface
 {
-
     /**
      * <code>
      * $controller = $this->getHandlerArray($requestHandler)[0];
@@ -31,5 +30,4 @@ interface AuthServiceInterface
      * @return bool
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool;
-
 }

@@ -10,7 +10,7 @@
 return [
     'serverDispatcher' => [
         'middlewares' => [
-            \Swoft\Auth\Middleware\AuthMiddleware::class,
+            Swoft\Auth\Middleware\AuthMiddleware::class,
         ]
     ],
 ];

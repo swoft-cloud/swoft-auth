@@ -65,7 +65,7 @@ class AuthUserService implements AuthServiceInterface
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool
     {
-        throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,"you need copy AuthUserService::auth method");
+        throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('AuthUserService::auth() method should be implemented in %s', static::class));
     }
 
     /**
@@ -80,5 +80,4 @@ class AuthUserService implements AuthServiceInterface
         }
         return $segments;
     }
-
 }

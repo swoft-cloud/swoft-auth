@@ -28,7 +28,6 @@ use Swoft\Http\Message\Middleware\MiddlewareInterface;
  */
 class AclMiddleware implements MiddlewareInterface
 {
-
     /**
      * Process an incoming server request and return a response, optionally delegating
      * response creation to a handler.
@@ -42,11 +41,10 @@ class AclMiddleware implements MiddlewareInterface
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
         /** @var AuthServiceInterface $service */
         $service = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
-        if (!$service->auth($requestHandler,$request)) {
+        if (!$service->auth($requestHandler, $request)) {
             throw new AuthException(ErrorCode::ACCESS_DENIED);
         }
         $response = $handler->handle($request);
         return $response;
     }
-
 }
