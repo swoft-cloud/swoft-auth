@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft\App;
+use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
@@ -39,9 +40,9 @@ class AclMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
-        $service = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
+        $service = App::getBean(AuthUserService::class);
         if (!$service instanceof AuthServiceInterface) {
-            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('%s  should implement AuthServiceInterface', ServiceConstants::AUTH_USERS_SERVICE));
+            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('%s  should implement AuthServiceInterface', AuthUserService::class));
         }
         if (!$service->auth($requestHandler, $request)) {
             throw new AuthException(ErrorCode::ACCESS_DENIED);

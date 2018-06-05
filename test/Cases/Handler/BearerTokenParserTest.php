@@ -25,7 +25,7 @@ class BearerTokenParserTest extends AbstractTestCase
         $router = App::getBean('httpRouter');
         $router->get('/test', function (Request $request) {
             /** @var AuthUserService $service */
-            $service  = App::getBean(ServiceConstants::AUTH_USERS_SERVICE);
+            $service  = App::getBean(AuthUserService::class);
             $session = $service->getSession();
             return ['id'=>$session->getIdentity()];
         });

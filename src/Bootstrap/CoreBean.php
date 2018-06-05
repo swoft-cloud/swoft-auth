@@ -31,14 +31,14 @@ class CoreBean implements BootBeanInterface
     public function beans()
     {
         return [
-            ServiceConstants::AUTH_REQUEST_HEADER_PARSER => [
+            AuthorizationHeaderParser::class=> [
                 'class' => AuthorizationHeaderParser::class
             ],
-            ServiceConstants::AUTH_MANAGER=>[
+            AuthManager::class=>[
                 'class' => AuthManager::class,
                 'tokenParserClass'=>JWTTokenParser::class,
             ],
-            ServiceConstants::AUTH_USERS_SERVICE=>[
+            AuthUserService::class=>[
                 'class'=>AuthUserService::class
             ]
         ];
