@@ -12,11 +12,11 @@ namespace Swoft\Auth\Mapping;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface AuthHandleInterface
+interface AuthHandlerInterface
 {
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function parse(ServerRequestInterface $request): ServerRequestInterface;
+    public function handle(ServerRequestInterface $request): ServerRequestInterface;
 }

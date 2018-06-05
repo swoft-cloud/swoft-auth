@@ -12,7 +12,6 @@ namespace SwoftTest\Auth\Parser;
 
 use Swoft\App;
 use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Parser\BasicAuthParser;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
 use SwoftTest\Auth\AbstractTestCase;
@@ -36,9 +35,9 @@ class BasicAuthParserTest extends AbstractTestCase
 
     /**
      * @test
-     * @covers BasicAuthParser::parse()
+     * @covers BasicAuthHandler::handle()
      */
-    public function testParser()
+    public function testHandle()
     {
         $username = 'user';
         $password = '123';

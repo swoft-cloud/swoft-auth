@@ -84,6 +84,9 @@ class AuthManager implements AuthManagerInterface
         return RequestContext::getContextDataByKey(AuthConstants::AUTH_SESSION);
     }
 
+    /**
+     * @param AuthSession $session
+     */
     public function setSession(AuthSession $session)
     {
         RequestContext::setContextData([AuthConstants::AUTH_SESSION => $session]);
@@ -94,7 +97,7 @@ class AuthManager implements AuthManagerInterface
      *
      * Check if a user is currently logged in
      */
-    public function loggedIn()
+    public function isLoggedIn()
     {
         return $this->getSession() instanceof AuthSession;
     }
@@ -123,7 +126,7 @@ class AuthManager implements AuthManagerInterface
                     $session->getExpirationTime()
                 );
             } catch (InvalidArgumentException $e) {
-                $err = sprintf('%s 参数无效,message : %s', $session->getIdentity(), $e->getMessage());
+                $err = sprintf('%s Invalid Argument : %s', $session->getIdentity(), $e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
@@ -174,6 +177,9 @@ class AuthManager implements AuthManagerInterface
         return $account;
     }
 
+    /**
+     * @return TokenParserInterface
+     */
     public function getTokenParser(): TokenParserInterface
     {
         if (!$this->tokenParser instanceof TokenParserInterface) {
@@ -189,6 +195,9 @@ class AuthManager implements AuthManagerInterface
         return $this->tokenParser;
     }
 
+    /**
+     * @return CacheInterface
+     */
     public function getCacheClient()
     {
         if (!$this->cache instanceof CacheInterface) {

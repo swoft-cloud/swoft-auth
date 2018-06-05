@@ -14,9 +14,9 @@ use Swoft\Auth\Bean\AuthResult;
 
 interface AccountTypeInterface
 {
-    const LOGIN_DATA_USERNAME = 'username';
+    const LOGIN_IDENTITY = 'identity';
 
-    const LOGIN_DATA_PASSWORD = 'password';
+    const LOGIN_CREDENTIAL = 'credential';
 
     /**
      * @param array $data Login data

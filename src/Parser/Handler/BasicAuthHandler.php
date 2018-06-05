@@ -8,11 +8,11 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace Swoft\Auth\Parser;
+namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Mapping\AuthHandleInterface;
+use Swoft\Auth\Mapping\AuthHandlerInterface;
 use Swoft\Bean\Annotation\Bean;
 
 /**
@@ -20,7 +20,7 @@ use Swoft\Bean\Annotation\Bean;
  * @package Swoft\Auth\Parser
  * @Bean()
  */
-class BasicAuthParser implements AuthHandleInterface
+class BasicAuthHandler implements AuthHandlerInterface
 {
     const NAME = 'Basic';
 
@@ -28,7 +28,7 @@ class BasicAuthParser implements AuthHandleInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function parse(ServerRequestInterface $request): ServerRequestInterface
+    public function handle(ServerRequestInterface $request): ServerRequestInterface
     {
         $authHeader = $request->getHeaderLine(AuthConstants::HEADER_KEY) ?? '';
         $basic = $this->parseValue($authHeader);

@@ -8,14 +8,14 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace Swoft\Auth\Parser;
+namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Constants\ServiceConstants;
-use Swoft\Auth\Mapping\AuthHandleInterface;
 use Swoft\Auth\Mapping\AuthManagerInterface;
+use Swoft\Auth\Mapping\AuthHandlerInterface;
 use Swoft\Bean\Annotation\Bean;
 
 /**
@@ -23,7 +23,7 @@ use Swoft\Bean\Annotation\Bean;
  * @package Swoft\Auth\Parser
  * @Bean()
  */
-class BearerTokenParser implements AuthHandleInterface
+class BearerTokenHandler implements AuthHandlerInterface
 {
     const NAME = 'Bearer';
 
@@ -31,7 +31,7 @@ class BearerTokenParser implements AuthHandleInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function parse(ServerRequestInterface $request): ServerRequestInterface
+    public function handle(ServerRequestInterface $request): ServerRequestInterface
     {
         $token = $this->getToken($request);
         /** @var AuthManagerInterface $manager */

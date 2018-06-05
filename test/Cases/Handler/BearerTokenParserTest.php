@@ -13,7 +13,6 @@ namespace SwoftTest\Auth\Parser;
 use Swoft\App;
 use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Constants\ServiceConstants;
-use Swoft\Auth\Parser\BearerTokenParser;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
 use SwoftTest\Auth\AbstractTestCase;
@@ -35,11 +34,10 @@ class BearerTokenParserTest extends AbstractTestCase
     /**
      * @test
      * @covers AuthManager::authenticateToken()
-     * @covers BearerTokenParser::parse()
-     * @covers AuthAccount::authenticate()
+     * @covers BearerTokenHandler::handle()
      * @covers AuthUserService::getSession()
      */
-    public function testParse()
+    public function testHandle()
     {
         $jwt = new JWTTokenParserTest();
         $token = $jwt->testGetToken();

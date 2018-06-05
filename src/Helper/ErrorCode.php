@@ -11,12 +11,8 @@
 namespace Swoft\Auth\Helper;
 
 /**
- * User: sl
- * Date: 2018/5/20
- * Time: 下午5:41
- * Interface ErrorCodeInterface
+ * Class ErrorCode
  * @package Swoft\Auth\Helper
- * @author April2 <ott321@yeah.net>
  */
 class ErrorCode
 {
