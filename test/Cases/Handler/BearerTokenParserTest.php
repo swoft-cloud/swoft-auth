@@ -12,7 +12,7 @@ namespace SwoftTest\Auth\Parser;
 
 use Swoft\App;
 use Swoft\Auth\AuthUserService;
-use Swoft\Auth\Constants\ServiceConstants;
+use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
 use SwoftTest\Auth\AbstractTestCase;
@@ -25,7 +25,7 @@ class BearerTokenParserTest extends AbstractTestCase
         $router = App::getBean('httpRouter');
         $router->get('/test', function (Request $request) {
             /** @var AuthUserService $service */
-            $service  = App::getBean(AuthUserService::class);
+            $service  = App::getBean(AuthServiceInterface::class);
             $session = $service->getSession();
             return ['id'=>$session->getIdentity()];
         });

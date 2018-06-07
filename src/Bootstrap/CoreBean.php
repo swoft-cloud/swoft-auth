@@ -12,7 +12,9 @@ namespace Swoft\Auth\Bootstrap;
 
 use Swoft\Auth\AuthManager;
 use Swoft\Auth\AuthUserService;
-use Swoft\Auth\Constants\ServiceConstants;
+use Swoft\Auth\Mapping\AuthManagerInterface;
+use Swoft\Auth\Mapping\AuthorizationParserInterface;
+use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Auth\Parser\AuthorizationHeaderParser;
 use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Bean\Annotation\BootBean;
@@ -31,14 +33,14 @@ class CoreBean implements BootBeanInterface
     public function beans()
     {
         return [
-            AuthorizationHeaderParser::class=> [
+            AuthorizationParserInterface::class=> [
                 'class' => AuthorizationHeaderParser::class
             ],
-            AuthManager::class=>[
+            AuthManagerInterface::class=>[
                 'class' => AuthManager::class,
                 'tokenParserClass'=>JWTTokenParser::class,
             ],
-            AuthUserService::class=>[
+            AuthServiceInterface::class=>[
                 'class'=>AuthUserService::class
             ]
         ];

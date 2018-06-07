@@ -12,9 +12,7 @@ namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\App;
-use Swoft\Auth\AuthManager;
 use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Auth\Mapping\AuthHandlerInterface;
 use Swoft\Bean\Annotation\Bean;
@@ -36,7 +34,7 @@ class BearerTokenHandler implements AuthHandlerInterface
     {
         $token = $this->getToken($request);
         /** @var AuthManagerInterface $manager */
-        $manager = App::getBean(AuthManager::class);
+        $manager = App::getBean(AuthManagerInterface::class);
         if ($token) {
             $res = $manager->authenticateToken($token);
             $request = $request->withAttribute(AuthConstants::IS_LOGIN, $res);
