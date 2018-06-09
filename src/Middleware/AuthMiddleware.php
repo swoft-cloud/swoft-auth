@@ -41,7 +41,7 @@ class AuthMiddleware implements MiddlewareInterface
     {
         $parser = App::getBean(AuthorizationParserInterface::class);
         if (!$parser instanceof AuthorizationParserInterface) {
-            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('%s  should implement AuthorizationParserInterface', $parser));
+            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthorizationParser should implement AuthorizationParserInterface');
         }
         $request = $parser->parse($request);
         $response = $handler->handle($request);
