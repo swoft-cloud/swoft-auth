@@ -50,7 +50,7 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
         if (isset($this->mergeTypes()[$type])) {
             $handler = App::getBean($this->mergeTypes()[$type]);
             if (!$handler instanceof AuthHandlerInterface) {
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('%s  should implement AuthHandlerInterface', $this->mergeTypes()[$type]));
+                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('%s  should implement Swoft\Auth\Mapping\AuthHandlerInterface', $this->mergeTypes()[$type]));
             }
             $request = $handler->handle($request);
         }

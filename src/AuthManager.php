@@ -184,11 +184,11 @@ class AuthManager implements AuthManagerInterface
     {
         if (!$this->tokenParser instanceof TokenParserInterface) {
             if (!App::hasBean($this->tokenParserClass)) {
-                throw new RuntimeException(sprintf('can`t find %s', $this->tokenParserClass));
+                throw new RuntimeException('Can`t find tokenParserClass');
             }
             $tokenParser = App::getBean($this->tokenParserClass);
             if (!$tokenParser instanceof TokenParserInterface) {
-                throw new RuntimeException(sprintf('%s need implements TokenParserInterface ', $this->tokenParserClass));
+                throw new RuntimeException("TokenParser need implements Swoft\Auth\Mapping\TokenParserInterface ");
             }
             $this->tokenParser = $tokenParser;
         }
@@ -202,11 +202,11 @@ class AuthManager implements AuthManagerInterface
     {
         if (!$this->cache instanceof CacheInterface) {
             if (!App::hasBean($this->cacheClass)) {
-                throw new RuntimeException(sprintf('can`t find %s', $this->cacheClass));
+                throw new RuntimeException('Can`t find cacheClass');
             }
             $cache = App::getBean($this->cacheClass);
             if (!$cache instanceof CacheInterface) {
-                throw new RuntimeException(sprintf('%s need implements CacheInterface ', $this->cacheClass));
+                throw new RuntimeException('CacheClient need implements Psr\SimpleCache\CacheInterface');
             }
             $this->cache = $cache;
         }

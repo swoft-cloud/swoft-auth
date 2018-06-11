@@ -14,11 +14,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft\App;
-use Swoft\Auth\Constants\ServiceConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthorizationParserInterface;
-use Swoft\Auth\Parser\AuthorizationHeaderParser;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 
@@ -41,7 +39,7 @@ class AuthMiddleware implements MiddlewareInterface
     {
         $parser = App::getBean(AuthorizationParserInterface::class);
         if (!$parser instanceof AuthorizationParserInterface) {
-            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthorizationParser should implement AuthorizationParserInterface');
+            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthorizationParser should implement Swoft\Auth\Mapping\AuthorizationParserInterface');
         }
         $request = $parser->parse($request);
         $response = $handler->handle($request);
