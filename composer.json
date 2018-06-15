@@ -4,9 +4,13 @@
     "keywords": [
         "php",
         "swoole",
-        "swoft"
+        "swoft",
+        "auth",
+        "auth-manager",
+        "jwt",
+        "acl"
     ],
-    "description": "microservice framework base on swoole",
+    "description": "auth compoment for swoft",
     "license": "Apache-2.0",
     "require": {
         "swoft/http-server": "^1.0",
