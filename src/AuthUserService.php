@@ -37,7 +37,7 @@ class AuthUserService implements AuthServiceInterface
         if (!$this->getSession()) {
             return [];
         }
-        return $this->getSession()->getExtendedData() ?? [];
+        return (array)$this->getSession()->getExtendedData() ?? [];
     }
 
     /**
