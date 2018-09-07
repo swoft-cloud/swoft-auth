@@ -138,7 +138,7 @@ class AuthManager implements AuthManagerInterface
         if (empty($extendedData)) {
             return $this->prefix . $identity;
         }
-        return $this->prefix . $identity . $extendedData[0];
+        return $this->prefix . $identity . (string)$extendedData[0];
     }
 
     /**
