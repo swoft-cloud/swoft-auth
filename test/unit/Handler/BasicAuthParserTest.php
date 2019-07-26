@@ -27,8 +27,8 @@ class BasicAuthParserTest extends AbstractTestCase
         /** @var HandlerMapping $router */
         $router = Swoft::getBean('httpRouter');
         $router->get('/', function (Request $request) {
-            $name = $request->getAttribute(AuthConstants::BASIC_USER_NAME);
-            $pd = $request->getAttribute(AuthConstants::BASIC_PASSWORD);
+            $name = $request->getAttribute(AuthConst::BASIC_USER_NAME);
+            $pd = $request->getAttribute(AuthConst::BASIC_PASSWORD);
             return ['username' => $name, 'password' => $pd];
         });
     }

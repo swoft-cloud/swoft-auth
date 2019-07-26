@@ -16,8 +16,12 @@ use Swoft\Auth\AuthConst;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Contract\AuthServiceInterface;
-use Swoft\Core\RequestContext;
 
+/**
+ * Class AuthUserService
+ *
+ * @since 2.0
+ */
 class AuthUserService implements AuthServiceInterface
 {
     public function getUserIdentity(): string
@@ -39,9 +43,9 @@ class AuthUserService implements AuthServiceInterface
     /**
      * @return AuthSession|null
      */
-    public function getSession()
+    public function getSession(): ?AuthSession
     {
-        return RequestContext::getContextDataByKey(AuthConstants::AUTH_SESSION) ?? null;
+        return context()->get(AuthConst::AUTH_SESSION);
     }
 
     /**

@@ -10,20 +10,20 @@
 
 namespace Swoft\Auth;
 
+use function json_encode;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
+use ReflectionException;
 use Swoft;
-use Swoft\Auth\AuthResult;
-use Swoft\Auth\AuthSession;
-use Swoft\Auth\AuthConst;
-use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Contract\AccountTypeInterface;
 use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Auth\Contract\TokenParserInterface;
+use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Parser\JWTTokenParser;
-use Swoft\Core\RequestContext;
-use Swoft\Exception\RuntimeException;
+use Swoft\Auth\Exception\RuntimeException;
+use function context;
+use Swoft\Bean\Exception\ContainerException;
+use Throwable;
 
 /**
  * Class AuthManager
@@ -82,12 +82,12 @@ class AuthManager implements AuthManagerInterface
      */
     public function getSession()
     {
-        return RequestContext::getContextDataByKey(AuthConstants::AUTH_SESSION);
+        return context()->get(AuthConst::AUTH_SESSION);
     }
 
-    public function setSession(AuthSession $session)
+    public function setSession(AuthSession $session): void
     {
-        RequestContext::setContextData([AuthConstants::AUTH_SESSION => $session]);
+        context()->set(AuthConst::AUTH_SESSION, $session);
     }
 
     /**
@@ -100,24 +100,28 @@ class AuthManager implements AuthManagerInterface
 
     public function login(string $accountTypeName, array $data): AuthSession
     {
-        if (! $account = $this->getAccountType($accountTypeName)) {
+        if (!$account = $this->getAccountType($accountTypeName)) {
             throw new AuthException(ErrorCode::AUTH_INVALID_ACCOUNT_TYPE);
         }
+
         $result = $account->login($data);
-        if (! $result instanceof AuthResult || $result->getIdentity() === '') {
+        if (!$result instanceof AuthResult || $result->getIdentity() === '') {
             throw new AuthException(ErrorCode::AUTH_LOGIN_FAILED);
         }
+
         $session = $this->generateSession($accountTypeName, $result->getIdentity(), $result->getExtendedData());
         $this->setSession($session);
+
         if ($this->cacheEnable === true) {
             try {
-                $this->getCacheClient()
-                    ->set($this->getCacheKey($session->getIdentity(), $session->getExtendedData()), $session->getToken(), $this->getSessionDuration());
-            } catch (InvalidArgumentException $e) {
+                $this->getCacheClient()->set($this->getCacheKey($session->getIdentity(), $session->getExtendedData()),
+                        $session->getToken(), $this->getSessionDuration());
+            } catch (\InvalidArgumentException $e) {
                 $err = sprintf('%s Invalid Argument : %s', $session->getIdentity(), $e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
+
         return $session;
     }
 
@@ -126,87 +130,110 @@ class AuthManager implements AuthManagerInterface
         if (empty($extendedData)) {
             return $this->prefix . $identity;
         }
+
         $str = json_encode($extendedData);
+
         return $this->prefix . $identity . '.' . md5($str);
     }
 
     public function generateSession(string $accountTypeName, string $identity, array $data = []): AuthSession
     {
         $startTime = time();
-        $exp = $startTime + (int)$this->sessionDuration;
-        $session = new AuthSession();
-        $session->setExtendedData($data)
-            ->setExpirationTime($exp)
-            ->setCreateTime($startTime)
-            ->setIdentity($identity)
-            ->setAccountTypeName($accountTypeName);
+        $exp       = $startTime + (int)$this->sessionDuration;
+        $session   = new AuthSession();
+
+        $session->setExtendedData($data)->setExpirationTime($exp)->setCreateTime($startTime)->setIdentity($identity)
+                ->setAccountTypeName($accountTypeName);
         $token = $this->getTokenParser()->getToken($session);
         $session->setToken($token);
+
         return $session;
     }
 
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return AccountTypeInterface|null
+     * @throws ContainerException
+     * @throws ReflectionException
      */
-    public function getAccountType($name)
+    public function getAccountType(string $name): ?AccountTypeInterface
     {
-        if (! Swoft::hasBean($name)) {
+        if (!Swoft::hasBean($name)) {
             return null;
         }
+
         $account = Swoft::getBean($name);
-        if (! $account instanceof AccountTypeInterface) {
+        if (!$account instanceof AccountTypeInterface) {
             return null;
         }
+
         return $account;
     }
 
     /**
-     * @throws RuntimeException When TokenParser missing or error.
+     * @return TokenParserInterface
+     * @throws ContainerException
+     * @throws ReflectionException
      */
     public function getTokenParser(): TokenParserInterface
     {
-        if (! $this->tokenParser instanceof TokenParserInterface) {
-            if (! Swoft::hasBean($this->tokenParserClass)) {
-                throw new RuntimeException('Can`t find tokenParserClass');
+        if (!$this->tokenParser instanceof TokenParserInterface) {
+            if (!Swoft::hasBean($this->tokenParserClass)) {
+                throw new RuntimeException('Cannot find tokenParserClass');
             }
+
             $tokenParser = Swoft::getBean($this->tokenParserClass);
-            if (! $tokenParser instanceof TokenParserInterface) {
+            if (!$tokenParser instanceof TokenParserInterface) {
                 throw new RuntimeException("TokenParser need implements Swoft\Auth\Contract\TokenParserInterface ");
             }
+
             $this->tokenParser = $tokenParser;
         }
+
         return $this->tokenParser;
     }
 
+    /**
+     * @return CacheInterface
+     * @throws ContainerException
+     * @throws ReflectionException
+     */
     public function getCacheClient(): CacheInterface
     {
-        if (! $this->cache instanceof CacheInterface) {
-            if (! Swoft::hasBean($this->cacheClass)) {
+        if (!$this->cache instanceof CacheInterface) {
+            if (!Swoft::hasBean($this->cacheClass)) {
                 throw new RuntimeException('Can`t find cacheClass');
             }
+
             $cache = Swoft::getBean($this->cacheClass);
-            if (! $cache instanceof CacheInterface) {
+            if (!$cache instanceof CacheInterface) {
                 throw new RuntimeException('CacheClient need implements Psr\SimpleCache\CacheInterface');
             }
+
             $this->cache = $cache;
         }
+
         return $this->cache;
     }
 
     /**
-     * @throws AuthException
+     * @param string $token
+     *
+     * @return bool
+     * @throws ContainerException
+     * @throws ReflectionException
      */
     public function authenticateToken(string $token): bool
     {
         try {
             /** @var AuthSession $session */
             $session = $this->getTokenParser()->getSession($token);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
         }
 
-        if (! $session) {
+        if (!$session) {
             return false;
         }
 
@@ -214,19 +241,19 @@ class AuthManager implements AuthManagerInterface
             throw new AuthException(ErrorCode::AUTH_SESSION_EXPIRED);
         }
 
-        if (! $account = $this->getAccountType($session->getAccountTypeName())) {
+        if (!$account = $this->getAccountType($session->getAccountTypeName())) {
             throw new AuthException(ErrorCode::AUTH_SESSION_INVALID);
         }
 
-        if (! $account->authenticate($session->getIdentity())) {
+        if (!$account->authenticate($session->getIdentity())) {
             throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
         }
 
         if ($this->cacheEnable === true) {
             try {
-                $cache = $this->getCacheClient()
-                    ->get($this->getCacheKey($session->getIdentity(), $session->getExtendedData()));
-                if (! $cache || $cache !== $token) {
+                $cache = $this->getCacheClient()->get($this->getCacheKey($session->getIdentity(),
+                        $session->getExtendedData()));
+                if (!$cache || $cache !== $token) {
                     throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
                 }
             } catch (InvalidArgumentException $e) {

@@ -37,7 +37,7 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
      */
     private $types = [];
 
-    private $headerKey = AuthConstants::HEADER_KEY;
+    private $headerKey = AuthConst::HEADER_KEY;
 
     /**
      * @throws AuthException When AuthHandler missing or error.

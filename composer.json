@@ -1,46 +1,39 @@
 {
-    "name": "swoft/auth",
-    "type": "library",
-    "keywords": [
-        "php",
-        "swoole",
-        "swoft",
-        "auth",
-        "auth-manager",
-        "jwt",
-        "acl"
-    ],
-    "description": "Auth component for swoft",
-    "license": "Apache-2.0",
-    "require": {
-        "swoft/http-server": "^1.0",
-        "firebase/php-jwt": "^5.0",
-        "psr/simple-cache": "^1.0",
-        "swoft/cache": "^1.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Swoft\\Auth\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SwoftTest\\Auth\\": "test/Cases"
-        }
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packagist.laravel-china.org"
-        }
-    ],
-    "require-dev": {
-        "eaglewu/swoole-ide-helper": "dev-master",
-        "phpunit/phpunit": "^5.7",
-        "friendsofphp/php-cs-fixer": "^2.11"
-    },
-    "scripts": {
-        "test": "./vendor/bin/phpunit -c phpunit.xml",
-        "cs-fix": "./vendor/bin/php-cs-fixer fix $1"
+  "name": "swoft/auth",
+  "type": "library",
+  "keywords": [
+    "php",
+    "swoole",
+    "swoft",
+    "auth",
+    "auth-manager",
+    "jwt",
+    "acl"
+  ],
+  "description": "Auth component for swoft",
+  "license": "Apache-2.0",
+  "require": {
+    "swoft/framework": "~2.0.0",
+    "firebase/php-jwt": "^5.0",
+    "psr/simple-cache": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Swoft\\Auth\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SwoftTest\\Auth\\Testing": "test/testing",
+      "SwoftTest\\Auth\\Unit": "test/unit"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5",
+    "friendsofphp/php-cs-fixer": "^2.11"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit -c phpunit.xml",
+    "cs-fix": "./vendor/bin/php-cs-fixer fix $1"
+  }
 }

@@ -13,7 +13,7 @@ namespace Swoft\Auth\Parser\Handler;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\AuthConst;
 use Swoft\Auth\Contract\AuthHandlerInterface;
-use Swoft\Bean\Annotation\Bean;
+use Swoft\Bean\Annotation\Mapping\Bean;
 
 /**
  * @Bean()
@@ -24,12 +24,12 @@ class BasicAuthHandler implements AuthHandlerInterface
 
     public function handle(ServerRequestInterface $request): ServerRequestInterface
     {
-        $authHeader = $request->getHeaderLine(AuthConstants::HEADER_KEY) ?? '';
+        $authHeader = $request->getHeaderLine(AuthConst::HEADER_KEY) ?? '';
         $basic = $this->parseValue($authHeader);
         if ($basic) {
             $request = $request
-                ->withAttribute(AuthConstants::BASIC_USER_NAME, $this->getUsername($basic))
-                ->withAttribute(AuthConstants::BASIC_PASSWORD, $this->getPassword($basic));
+                ->withAttribute(AuthConst::BASIC_USER_NAME, $this->getUsername($basic))
+                ->withAttribute(AuthConst::BASIC_PASSWORD, $this->getPassword($basic));
         }
         return $request;
     }

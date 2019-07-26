@@ -23,79 +23,67 @@ class ErrorCodeHelper
      * @var array
      */
     protected $errors = [
-        ErrorCode::GENERAL_SYSTEM => [
+        ErrorCode::GENERAL_SYSTEM            => [
             'statusCode' => 500,
             'message'    => 'General: System Error'
         ],
-
-        ErrorCode::GENERAL_NOT_IMPLEMENTED => [
+        ErrorCode::GENERAL_NOT_IMPLEMENTED   => [
             'statusCode' => 500,
             'message'    => 'General: Not Implemented'
         ],
-
         ErrorCode::GENERAL_NOT_FOUND         => [
             'statusCode' => 404,
             'message'    => 'General: Not Found'
         ],
-
         // Authentication
         ErrorCode::AUTH_INVALID_ACCOUNT_TYPE => [
             'statusCode' => 400,
             'message'    => 'Authentication: Invalid Account Type'
         ],
-
-        ErrorCode::AUTH_LOGIN_FAILED => [
+        ErrorCode::AUTH_LOGIN_FAILED         => [
             'statusCode' => 401,
             'message'    => 'Authentication: Login Failed'
         ],
-
-        ErrorCode::AUTH_TOKEN_INVALID => [
+        ErrorCode::AUTH_TOKEN_INVALID        => [
             'statusCode' => 401,
             'message'    => 'Authentication: Login Failed'
         ],
-
-        ErrorCode::AUTH_SESSION_EXPIRED => [
+        ErrorCode::AUTH_SESSION_EXPIRED      => [
             'statusCode' => 401,
             'message'    => 'Authentication: Session Expired'
         ],
-
-        ErrorCode::AUTH_SESSION_INVALID => [
+        ErrorCode::AUTH_SESSION_INVALID      => [
             'statusCode' => 401,
             'message'    => 'Authentication: Session Invalid'
         ],
-
-        ErrorCode::ACCESS_DENIED => [
+        ErrorCode::ACCESS_DENIED             => [
             'statusCode' => 403,
             'message'    => 'Access: Denied'
         ],
-
-        ErrorCode::DATA_FAILED => [
+        ErrorCode::DATA_FAILED               => [
             'statusCode' => 500,
             'message'    => 'Data: Failed'
         ],
-
-        ErrorCode::DATA_NOT_FOUND => [
+        ErrorCode::DATA_NOT_FOUND            => [
             'statusCode' => 404,
             'message'    => 'Data: Not Found'
         ],
-
-        ErrorCode::POST_DATA_NOT_PROVIDED => [
+        ErrorCode::POST_DATA_NOT_PROVIDED    => [
             'statusCode' => 400,
             'message'    => 'Postdata: Not provided'
         ],
-
-        ErrorCode::POST_DATA_INVALID => [
+        ErrorCode::POST_DATA_INVALID         => [
             'statusCode' => 400,
             'message'    => 'Postdata: Invalid'
         ]
     ];
 
     /**
-     * @param $code
+     * @param int $code
      *
      * @return array|null
      */
-    public function get($code)
+    public function get(int $code)
     {
         return $this->has($code) ? $this->getErrors()[$code] : null;
     }

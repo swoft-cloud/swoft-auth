@@ -12,7 +12,7 @@ namespace SwoftTest\Auth\Account;
 
 use Swoft\Auth\AuthResult;
 use Swoft\Auth\Contract\AccountTypeInterface;
-use Swoft\Bean\Annotation\Bean;
+use Swoft\Bean\Annotation\Mapping\Bean;
 
 /**
  * Class TestAccount
