@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -12,8 +12,8 @@ namespace SwoftTest\Auth\UnitParser;
 
 use Swoft;
 use Swoft\Auth\AuthUserService;
-use Swoft\Auth\Mapping\AuthManagerInterface;
-use Swoft\Auth\Mapping\AuthServiceInterface;
+use Swoft\Auth\Contract\AuthManagerInterface;
+use Swoft\Auth\Contract\AuthServiceInterface;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
 use SwoftTest\Auth\UnitAbstractTestCase;

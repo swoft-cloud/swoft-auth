@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -15,12 +15,12 @@ use Psr\SimpleCache\InvalidArgumentException;
 use Swoft;
 use Swoft\Auth\AuthResult;
 use Swoft\Auth\AuthSession;
-use Swoft\Auth\Constants\AuthConstants;
+use Swoft\Auth\AuthConst;
 use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Helper\ErrorCode;
-use Swoft\Auth\Mapping\AccountTypeInterface;
-use Swoft\Auth\Mapping\AuthManagerInterface;
-use Swoft\Auth\Mapping\TokenParserInterface;
+use Swoft\Auth\ErrorCode;
+use Swoft\Auth\Contract\AccountTypeInterface;
+use Swoft\Auth\Contract\AuthManagerInterface;
+use Swoft\Auth\Contract\TokenParserInterface;
 use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Core\RequestContext;
 use Swoft\Exception\RuntimeException;
@@ -151,10 +151,10 @@ class AuthManager implements AuthManagerInterface
      */
     public function getAccountType($name)
     {
-        if (! App::hasBean($name)) {
+        if (! Swoft::hasBean($name)) {
             return null;
         }
-        $account = App::getBean($name);
+        $account = Swoft::getBean($name);
         if (! $account instanceof AccountTypeInterface) {
             return null;
         }
@@ -167,12 +167,12 @@ class AuthManager implements AuthManagerInterface
     public function getTokenParser(): TokenParserInterface
     {
         if (! $this->tokenParser instanceof TokenParserInterface) {
-            if (! App::hasBean($this->tokenParserClass)) {
+            if (! Swoft::hasBean($this->tokenParserClass)) {
                 throw new RuntimeException('Can`t find tokenParserClass');
             }
-            $tokenParser = App::getBean($this->tokenParserClass);
+            $tokenParser = Swoft::getBean($this->tokenParserClass);
             if (! $tokenParser instanceof TokenParserInterface) {
-                throw new RuntimeException("TokenParser need implements Swoft\Auth\Mapping\TokenParserInterface ");
+                throw new RuntimeException("TokenParser need implements Swoft\Auth\Contract\TokenParserInterface ");
             }
             $this->tokenParser = $tokenParser;
         }
@@ -182,10 +182,10 @@ class AuthManager implements AuthManagerInterface
     public function getCacheClient(): CacheInterface
     {
         if (! $this->cache instanceof CacheInterface) {
-            if (! App::hasBean($this->cacheClass)) {
+            if (! Swoft::hasBean($this->cacheClass)) {
                 throw new RuntimeException('Can`t find cacheClass');
             }
-            $cache = App::getBean($this->cacheClass);
+            $cache = Swoft::getBean($this->cacheClass);
             if (! $cache instanceof CacheInterface) {
                 throw new RuntimeException('CacheClient need implements Psr\SimpleCache\CacheInterface');
             }

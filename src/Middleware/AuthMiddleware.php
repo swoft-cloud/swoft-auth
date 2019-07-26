@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -15,10 +15,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft;
 use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Helper\ErrorCode;
-use Swoft\Auth\Mapping\AuthorizationParserInterface;
-use Swoft\Bean\Annotation\Bean;
-use Swoft\Http\Message\Middleware\MiddlewareInterface;
+use Swoft\Auth\ErrorCode;
+use Swoft\Auth\Contract\AuthorizationParserInterface;
+use Swoft\Bean\Annotation\Mapping\Bean;
+use Swoft\Http\Server\Contract\MiddlewareInterface;
 
 /**
  * @Bean()
@@ -33,9 +33,9 @@ class AuthMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $parser = App::getBean(AuthorizationParserInterface::class);
+        $parser = Swoft::getBean(AuthorizationParserInterface::class);
         if (!$parser instanceof AuthorizationParserInterface) {
-            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthorizationParser should implement Swoft\Auth\Mapping\AuthorizationParserInterface');
+            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthorizationParser should implement Swoft\Auth\Contract\AuthorizationParserInterface');
         }
         $request = $parser->parse($request);
         $response = $handler->handle($request);

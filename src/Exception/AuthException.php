@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -10,13 +10,13 @@
 
 namespace Swoft\Auth\Exception;
 
-use Swoft\Exception\RuntimeException;
-use Throwable;
+use RuntimeException;
 
+/**
+ * Class AuthException
+ *
+ * @since 2.0
+ */
 class AuthException extends RuntimeException
 {
-    public function __construct(int $code = 0, string $message = '', Throwable $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
 }

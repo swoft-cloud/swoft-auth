@@ -10,9 +10,10 @@ Swoft Auth Component
 composer require swoft/auth
 ```
 
-## Document [wiki](https://github.com/aprchen/swoft-auth/wiki)
+## Document
 
 Now
+
 - BasicAuth 
 - BearerToken  (JWT)
 - Acl

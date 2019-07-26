@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -12,7 +12,7 @@ namespace Swoft\Auth\Parser;
 
 use Firebase\JWT\JWT;
 use Swoft\Auth\AuthSession;
-use Swoft\Auth\Mapping\TokenParserInterface;
+use Swoft\Auth\Contract\TokenParserInterface;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Annotation\Value;
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -10,8 +10,8 @@
 
 namespace SwoftTest\Auth\UnitHelper;
 
-use Swoft\Auth\Helper\ErrorCode;
-use Swoft\Auth\Helper\ErrorCodeHelper;
+use Swoft\Auth\ErrorCode;
+use Swoft\Auth\ErrorCodeHelper;
 use SwoftTest\Auth\UnitAbstractTestCase;
 
 class ErrorCodeHelperTest extends AbstractTestCase

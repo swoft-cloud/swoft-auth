@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -11,7 +11,7 @@
 namespace SwoftTest\Auth\Account;
 
 use Swoft\Auth\AuthResult;
-use Swoft\Auth\Mapping\AccountTypeInterface;
+use Swoft\Auth\Contract\AccountTypeInterface;
 use Swoft\Bean\Annotation\Bean;
 
 /**

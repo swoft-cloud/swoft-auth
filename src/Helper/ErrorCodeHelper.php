@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -10,10 +10,11 @@
 
 namespace Swoft\Auth\Helper;
 
-use Swoft\Bean\Annotation\Bean;
+use Swoft\Auth\ErrorCode;
+use Swoft\Bean\Annotation\Mapping\Bean;
 
 /**
- * @package Swoft\Auth\Helper
+ * @since 2.0
  * @Bean()
  */
 class ErrorCodeHelper
@@ -24,73 +25,74 @@ class ErrorCodeHelper
     protected $errors = [
         ErrorCode::GENERAL_SYSTEM => [
             'statusCode' => 500,
-            'message' => 'General: System Error'
+            'message'    => 'General: System Error'
         ],
 
         ErrorCode::GENERAL_NOT_IMPLEMENTED => [
             'statusCode' => 500,
-            'message' => 'General: Not Implemented'
+            'message'    => 'General: Not Implemented'
         ],
 
-        ErrorCode::GENERAL_NOT_FOUND => [
+        ErrorCode::GENERAL_NOT_FOUND         => [
             'statusCode' => 404,
-            'message' => 'General: Not Found'
+            'message'    => 'General: Not Found'
         ],
 
         // Authentication
         ErrorCode::AUTH_INVALID_ACCOUNT_TYPE => [
             'statusCode' => 400,
-            'message' => 'Authentication: Invalid Account Type'
+            'message'    => 'Authentication: Invalid Account Type'
         ],
 
         ErrorCode::AUTH_LOGIN_FAILED => [
             'statusCode' => 401,
-            'message' => 'Authentication: Login Failed'
+            'message'    => 'Authentication: Login Failed'
         ],
 
         ErrorCode::AUTH_TOKEN_INVALID => [
             'statusCode' => 401,
-            'message' => 'Authentication: Login Failed'
+            'message'    => 'Authentication: Login Failed'
         ],
 
         ErrorCode::AUTH_SESSION_EXPIRED => [
             'statusCode' => 401,
-            'message' => 'Authentication: Session Expired'
+            'message'    => 'Authentication: Session Expired'
         ],
 
         ErrorCode::AUTH_SESSION_INVALID => [
             'statusCode' => 401,
-            'message' => 'Authentication: Session Invalid'
+            'message'    => 'Authentication: Session Invalid'
         ],
 
         ErrorCode::ACCESS_DENIED => [
             'statusCode' => 403,
-            'message' => 'Access: Denied'
+            'message'    => 'Access: Denied'
         ],
 
         ErrorCode::DATA_FAILED => [
             'statusCode' => 500,
-            'message' => 'Data: Failed'
+            'message'    => 'Data: Failed'
         ],
 
         ErrorCode::DATA_NOT_FOUND => [
             'statusCode' => 404,
-            'message' => 'Data: Not Found'
+            'message'    => 'Data: Not Found'
         ],
 
         ErrorCode::POST_DATA_NOT_PROVIDED => [
             'statusCode' => 400,
-            'message' => 'Postdata: Not provided'
+            'message'    => 'Postdata: Not provided'
         ],
 
         ErrorCode::POST_DATA_INVALID => [
             'statusCode' => 400,
-            'message' => 'Postdata: Invalid'
+            'message'    => 'Postdata: Invalid'
         ]
     ];
 
     /**
      * @param $code
+     *
      * @return array|null
      */
     public function get($code)
@@ -99,28 +101,36 @@ class ErrorCodeHelper
     }
 
     /**
-     * @param $code
+     * @param int $code
+     *
+     * @return bool
      */
-    public function has($code): bool
+    public function has(int $code): bool
     {
-        return array_key_exists($code, $this->getErrors());
+        return isset($this->errors[$code]);
     }
 
     /**
-     * @param $code
-     * @param $message
-     * @param $statusCode
+     *
+     * @param int    $code
+     * @param string $message
+     * @param int    $statusCode
+     *
+     * @return ErrorCodeHelper
      */
-    public function error($code, $message, $statusCode): self
+    public function error(int $code, string $message, int $statusCode): self
     {
         $this->errors[$code] = [
             'statusCode' => $statusCode,
-            'message' => $message
+            'message'    => $message
         ];
 
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getErrors(): array
     {
         return $this->errors;

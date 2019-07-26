@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -12,9 +12,9 @@ namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft;
-use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Mapping\AuthManagerInterface;
-use Swoft\Auth\Mapping\AuthHandlerInterface;
+use Swoft\Auth\AuthConst;
+use Swoft\Auth\Contract\AuthManagerInterface;
+use Swoft\Auth\Contract\AuthHandlerInterface;
 use Swoft\Bean\Annotation\Bean;
 
 /**
@@ -28,7 +28,7 @@ class BearerTokenHandler implements AuthHandlerInterface
     {
         $token = $this->getToken($request);
         /** @var AuthManagerInterface $manager */
-        $manager = App::getBean(AuthManagerInterface::class);
+        $manager = Swoft::getBean(AuthManagerInterface::class);
         if ($token) {
             $res = $manager->authenticateToken($token);
             $request = $request->withAttribute(AuthConstants::IS_LOGIN, $res);

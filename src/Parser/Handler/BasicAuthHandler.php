@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -11,8 +11,8 @@
 namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Swoft\Auth\Constants\AuthConstants;
-use Swoft\Auth\Mapping\AuthHandlerInterface;
+use Swoft\Auth\AuthConst;
+use Swoft\Auth\Contract\AuthHandlerInterface;
 use Swoft\Bean\Annotation\Bean;
 
 /**

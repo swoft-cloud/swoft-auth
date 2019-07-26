@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -15,10 +15,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoft;
 use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Helper\ErrorCode;
-use Swoft\Auth\Mapping\AuthServiceInterface;
-use Swoft\Bean\Annotation\Bean;
-use Swoft\Http\Message\Middleware\MiddlewareInterface;
+use Swoft\Auth\ErrorCode;
+use Swoft\Auth\Contract\AuthServiceInterface;
+use Swoft\Bean\Annotation\Mapping\Bean;
+use Swoft\Http\Server\Contract\MiddlewareInterface;
 
 /**
  * @Bean()
@@ -34,14 +34,16 @@ class AclMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestHandler = $request->getAttributes()['requestHandler'][2]['handler'] ?? '';
-        $service = App::getBean(AuthServiceInterface::class);
+        $service = Swoft::getBean(AuthServiceInterface::class);
+
         if (!$service instanceof AuthServiceInterface) {
-            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthService should implement Swoft\Auth\Mapping\AuthServiceInterface');
+            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, 'AuthService should implement Swoft\Auth\Contract\AuthServiceInterface');
         }
+
         if (!$service->auth($requestHandler, $request)) {
             throw new AuthException(ErrorCode::ACCESS_DENIED);
         }
-        $response = $handler->handle($request);
-        return $response;
+
+        return $handler->handle($request);
     }
 }

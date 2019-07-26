@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of Swoft.
  *
@@ -12,10 +12,10 @@ namespace Swoft\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\AuthSession;
-use Swoft\Auth\Constants\AuthConstants;
+use Swoft\Auth\AuthConst;
 use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Helper\ErrorCode;
-use Swoft\Auth\Mapping\AuthServiceInterface;
+use Swoft\Auth\ErrorCode;
+use Swoft\Auth\Contract\AuthServiceInterface;
 use Swoft\Core\RequestContext;
 
 class AuthUserService implements AuthServiceInterface
