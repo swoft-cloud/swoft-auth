@@ -11,6 +11,7 @@
 namespace Swoft\Auth\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
+use ReflectionException;
 use Swoft;
 use Swoft\Auth\AuthConst;
 use Swoft\Auth\Contract\AuthHandlerInterface;
@@ -19,11 +20,16 @@ use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Parser\Handler\BasicAuthHandler;
 use Swoft\Auth\Parser\Handler\BearerTokenHandler;
-use Swoft\Bean\Annotation\Value;
-use Swoft\Helper\ArrayHelper;
+use Swoft\Bean\Exception\ContainerException;
+use Swoft\Stdlib\Helper\ArrayHelper;
 
 class AuthorizationHeaderParser implements AuthorizationParserInterface
 {
+    /**
+     * @var array
+     */
+    private $types = [];
+
     /**
      * The parsers
      *
@@ -32,29 +38,34 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
     private $authTypes = [];
 
     /**
-     * @Value("${config.auth.types}")
-     * @var array
+     * @var string
      */
-    private $types = [];
-
     private $headerKey = AuthConst::HEADER_KEY;
 
     /**
-     * @throws AuthException When AuthHandler missing or error.
+     * @param ServerRequestInterface $request
+     *
+     * @return ServerRequestInterface
+     * @throws ContainerException
+     * @throws ReflectionException
      */
     public function parse(ServerRequestInterface $request): ServerRequestInterface
     {
         $authValue = $request->getHeaderLine($this->headerKey);
-        $type      = $this->getHeadString($authValue);
+
+        $type = $this->getHeadString($authValue);
         if (isset($this->mergeTypes()[$type])) {
             $handler = Swoft::getBean($this->mergeTypes()[$type]);
+
             if (!$handler instanceof AuthHandlerInterface) {
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
                     sprintf('%s  should implement Swoft\Auth\Contract\AuthHandlerInterface',
                         $this->mergeTypes()[$type]));
             }
+
             $request = $handler->handle($request);
         }
+
         return $request;
     }
 

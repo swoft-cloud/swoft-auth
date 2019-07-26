@@ -65,7 +65,7 @@ class AuthUserService implements AuthServiceInterface
     /**
      * @return array|null
      */
-    protected function getHandlerArray(string $handler)
+    protected function getHandlerArray(string $handler): ?array
     {
         $segments = explode('@', trim($handler));
         if (!isset($segments[1])) {

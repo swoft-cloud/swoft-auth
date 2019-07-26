@@ -72,7 +72,7 @@ class AuthManager implements AuthManagerInterface
         return $this->sessionDuration;
     }
 
-    public function setSessionDuration($time)
+    public function setSessionDuration($time): void
     {
         $this->sessionDuration = $time;
     }

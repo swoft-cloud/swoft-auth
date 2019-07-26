@@ -12,7 +12,7 @@ namespace SwoftTest\Auth\UnitHelper;
 
 use Swoft\Auth\ErrorCode;
 use Swoft\Auth\ErrorCodeHelper;
-use SwoftTest\Auth\UnitAbstractTestCase;
+use SwoftTest\Auth\Unit\AbstractTestCase;
 
 class ErrorCodeHelperTest extends AbstractTestCase
 {

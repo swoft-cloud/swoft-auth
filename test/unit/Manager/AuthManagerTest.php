@@ -16,7 +16,7 @@ use Swoft\Auth\AuthManager;
 use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
-use SwoftTest\Auth\UnitAbstractTestCase;
+use SwoftTest\Auth\Unit\AbstractTestCase;
 
 class AuthManagerTest extends AbstractTestCase
 {

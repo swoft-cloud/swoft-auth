@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace SwoftTest\Auth\UnitTesting;
+namespace SwoftTest\Auth\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Swoft;
-use Swoft\Helper\ArrayHelper;
+use Swoft\Stdlib\Helper\ArrayHelper;
 use Swoft\Http\Message\Testing\Web\Request;
 use Swoft\Http\Message\Testing\Web\Response;
 use Swoft\Http\Server\Router\HandlerMapping;

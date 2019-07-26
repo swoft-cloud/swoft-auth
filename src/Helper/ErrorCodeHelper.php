@@ -83,7 +83,7 @@ class ErrorCodeHelper
      *
      * @return array|null
      */
-    public function get(int $code)
+    public function get(int $code): ?array
     {
         return $this->has($code) ? $this->getErrors()[$code] : null;
     }

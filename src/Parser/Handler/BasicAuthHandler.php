@@ -20,7 +20,7 @@ use Swoft\Bean\Annotation\Mapping\Bean;
  */
 class BasicAuthHandler implements AuthHandlerInterface
 {
-    const NAME = 'Basic';
+    public const NAME = 'Basic';
 
     /**
      * @param ServerRequestInterface $request

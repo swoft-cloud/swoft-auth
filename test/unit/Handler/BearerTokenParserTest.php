@@ -16,8 +16,8 @@ use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Auth\Contract\AuthServiceInterface;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
-use SwoftTest\Auth\UnitAbstractTestCase;
-use SwoftTest\Auth\UnitManager\TestManager;
+use SwoftTest\Auth\Unit\AbstractTestCase;
+use SwoftTest\Auth\Unit\Manager\TestManager;
 
 class BearerTokenParserTest extends AbstractTestCase
 {

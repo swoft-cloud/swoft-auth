@@ -21,13 +21,13 @@ use Swoft\Bean\Annotation\Value;
  */
 class JWTTokenParser implements TokenParserInterface
 {
-    const ALGORITHM_HS256 = 'HS256';
+    public const ALGORITHM_HS256 = 'HS256';
 
-    const ALGORITHM_HS512 = 'HS512';
+    public const ALGORITHM_HS512 = 'HS512';
 
-    const ALGORITHM_HS384 = 'HS384';
+    public const ALGORITHM_HS384 = 'HS384';
 
-    const ALGORITHM_RS256 = 'RS256';
+    public const ALGORITHM_RS256 = 'RS256';
 
     /**
      * @Value("${config.auth.jwt.algorithm}")

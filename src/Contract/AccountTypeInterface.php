@@ -19,9 +19,9 @@ use Swoft\Auth\AuthResult;
  */
 interface AccountTypeInterface
 {
-    const LOGIN_IDENTITY = 'identity';
+    public const LOGIN_IDENTITY = 'identity';
 
-    const LOGIN_CREDENTIAL = 'credential';
+    public const LOGIN_CREDENTIAL = 'credential';
 
     public function login(array $data): AuthResult;
 

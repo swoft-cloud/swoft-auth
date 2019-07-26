@@ -13,11 +13,13 @@ namespace Swoft\Auth\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use ReflectionException;
 use Swoft;
 use Swoft\Auth\Contract\AuthorizationParserInterface;
 use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Bean\Annotation\Mapping\Bean;
+use Swoft\Bean\Exception\ContainerException;
 use Swoft\Http\Server\Contract\MiddlewareInterface;
 
 /**
@@ -29,7 +31,12 @@ class AuthMiddleware implements MiddlewareInterface
      * Process an incoming server request and return a response, optionally delegating
      * response creation to a handler.
      *
-     * @throws \Swoft\Auth\Exception\AuthException When AuthorizationParser missing or error.
+     * @param ServerRequestInterface  $request
+     * @param RequestHandlerInterface $handler
+     *
+     * @return ResponseInterface
+     * @throws ContainerException
+     * @throws ReflectionException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -39,7 +46,6 @@ class AuthMiddleware implements MiddlewareInterface
                 'AuthorizationParser should implement Swoft\Auth\Contract\AuthorizationParserInterface');
         }
         $request  = $parser->parse($request);
-        $response = $handler->handle($request);
-        return $response;
+        return $handler->handle($request);
     }
 }

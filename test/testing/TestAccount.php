@@ -8,7 +8,7 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace SwoftTest\Auth\Account;
+namespace SwoftTest\Auth\Testing;
 
 use Swoft\Auth\AuthResult;
 use Swoft\Auth\Contract\AccountTypeInterface;

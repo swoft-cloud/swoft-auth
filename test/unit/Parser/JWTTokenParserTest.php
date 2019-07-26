@@ -13,8 +13,8 @@ namespace SwoftTest\Auth\UnitParser;
 use Swoft;
 use Swoft\Auth\AuthSession;
 use Swoft\Auth\Parser\JWTTokenParser;
-use SwoftTest\Auth\UnitAbstractTestCase;
-use SwoftTest\Auth\UnitAccount\TestAccount;
+use SwoftTest\Auth\Unit\AbstractTestCase;
+use SwoftTest\Auth\Testing\TestAccount;
 
 class JWTTokenParserTest extends AbstractTestCase
 {
@@ -26,7 +26,7 @@ class JWTTokenParserTest extends AbstractTestCase
     {
         $parser  = Swoft::getBean(JWTTokenParser::class);
         $session = new AuthSession();
-        $session->setIdentity(2);
+        $session->setIdentity('2');
         $session->setExpirationTime(time() + 10);
         $session->setAccountTypeName(TestAccount::class);
         $token = $parser->getToken($session);
