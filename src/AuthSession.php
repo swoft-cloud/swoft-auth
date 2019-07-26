@@ -8,7 +8,7 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace Swoft\Auth\Bean;
+namespace Swoft\Auth;
 
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Annotation\Scope;

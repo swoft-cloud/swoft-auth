@@ -11,7 +11,7 @@
 namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Swoft\App;
+use Swoft;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Auth\Mapping\AuthHandlerInterface;

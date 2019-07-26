@@ -13,11 +13,11 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once __DIR__ . '/config/define.php';
 
 // init
-\Swoft\App::$isInTest = true;
+\Swoft::$isInTest = true;
 \Swoft\Bean\BeanFactory::init();
 
 /* @var \Swoft\Bootstrap\Boots\Bootable $bootstrap*/
-$bootstrap = \Swoft\App::getBean(\Swoft\Bootstrap\Bootstrap::class);
+$bootstrap = \Swoft::getBean(\Swoft\Bootstrap\Bootstrap::class);
 $bootstrap->bootstrap();
 
 \Swoft\Bean\BeanFactory::reload([

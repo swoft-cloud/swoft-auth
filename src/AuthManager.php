@@ -12,9 +12,9 @@ namespace Swoft\Auth;
 
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
-use Swoft\App;
-use Swoft\Auth\Bean\AuthResult;
-use Swoft\Auth\Bean\AuthSession;
+use Swoft;
+use Swoft\Auth\AuthResult;
+use Swoft\Auth\AuthSession;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
@@ -25,6 +25,11 @@ use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Core\RequestContext;
 use Swoft\Exception\RuntimeException;
 
+/**
+ * Class AuthManager
+ *
+ * @since 2.0
+ */
 class AuthManager implements AuthManagerInterface
 {
     /**

@@ -10,7 +10,7 @@
 
 namespace Swoft\Auth\Mapping;
 
-use Swoft\Auth\Bean\AuthSession;
+use Swoft\Auth\AuthSession;
 
 interface TokenParserInterface
 {

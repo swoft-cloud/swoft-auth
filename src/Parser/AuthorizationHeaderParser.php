@@ -11,7 +11,7 @@
 namespace Swoft\Auth\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Swoft\App;
+use Swoft;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;

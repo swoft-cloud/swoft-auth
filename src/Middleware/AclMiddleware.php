@@ -13,7 +13,7 @@ namespace Swoft\Auth\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Swoft\App;
+use Swoft;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Helper\ErrorCode;
 use Swoft\Auth\Mapping\AuthServiceInterface;

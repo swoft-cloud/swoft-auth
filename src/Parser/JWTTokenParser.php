@@ -11,7 +11,7 @@
 namespace Swoft\Auth\Parser;
 
 use Firebase\JWT\JWT;
-use Swoft\Auth\Bean\AuthSession;
+use Swoft\Auth\AuthSession;
 use Swoft\Auth\Mapping\TokenParserInterface;
 use Swoft\Bean\Annotation\Bean;
 use Swoft\Bean\Annotation\Value;

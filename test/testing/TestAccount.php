@@ -10,7 +10,7 @@
 
 namespace SwoftTest\Auth\Account;
 
-use Swoft\Auth\Bean\AuthResult;
+use Swoft\Auth\AuthResult;
 use Swoft\Auth\Mapping\AccountTypeInterface;
 use Swoft\Bean\Annotation\Bean;
 

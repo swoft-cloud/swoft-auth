@@ -10,8 +10,13 @@
 
 namespace Swoft\Auth\Mapping;
 
-use Swoft\Auth\Bean\AuthResult;
+use Swoft\Auth\AuthResult;
 
+/**
+ * Interface AccountTypeInterface
+ *
+ * @since 2.0
+ */
 interface AccountTypeInterface
 {
     const LOGIN_IDENTITY = 'identity';

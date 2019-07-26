@@ -1,17 +1,9 @@
-<?php
-/**
- * This file is part of Swoft.
- *
- * @link     https://swoft.org
- * @document https://doc.swoft.org
- * @contact  group@swoft.org
- * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
- */
+<?php declare(strict_types=1);
 
-namespace SwoftTest\Auth;
+namespace SwoftTest\Auth\UnitTesting;
 
 use PHPUnit\Framework\TestCase;
-use Swoft\App;
+use Swoft;
 use Swoft\Helper\ArrayHelper;
 use Swoft\Http\Server\Router\HandlerMapping;
 use Swoft\Testing\SwooleRequest as TestSwooleRequest;
@@ -21,7 +13,6 @@ use Swoft\Http\Message\Testing\Web\Response;
 
 /**
  * Class AbstractTestCase
- * @package SwoftTest\Auth
  */
 class AbstractTestCase extends TestCase
 {
@@ -34,7 +25,7 @@ class AbstractTestCase extends TestCase
     protected function registerRoute()
     {
         /** @var HandlerMapping $router */
-        $router = App::getBean('httpRouter');
+        $router = Swoft::getBean('httpRouter');
 
         $router->get('/', function () {
             return [1];
@@ -72,7 +63,7 @@ class AbstractTestCase extends TestCase
         $response = new Response($swooleResponse);
 
         /** @var \Swoft\Http\Server\ServerDispatcher $dispatcher */
-        $dispatcher = App::getBean('serverDispatcher');
+        $dispatcher = Swoft::getBean('serverDispatcher');
         return $dispatcher->dispatch($request, $response);
     }
 

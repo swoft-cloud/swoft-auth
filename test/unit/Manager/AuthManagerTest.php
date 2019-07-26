@@ -8,13 +8,13 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace SwoftTest\Auth\Manager;
+namespace SwoftTest\Auth\UnitManager;
 
-use Swoft\App;
+use Swoft;
 use Swoft\Auth\AuthManager;
 use Swoft\Auth\Constants\AuthConstants;
 use Swoft\Auth\Mapping\AuthManagerInterface;
-use SwoftTest\Auth\AbstractTestCase;
+use SwoftTest\Auth\UnitAbstractTestCase;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
 
@@ -23,12 +23,12 @@ class AuthManagerTest extends AbstractTestCase
     protected function registerRoute()
     {
         /** @var HandlerMapping $router */
-        $router = App::getBean('httpRouter');
+        $router = Swoft::getBean('httpRouter');
         $router->post('/login', function (Request $request) {
             $name = $request->getAttribute(AuthConstants::BASIC_USER_NAME);
             $pd = $request->getAttribute(AuthConstants::BASIC_PASSWORD);
             /** @var TestManager $manager */
-            $manager = App::getBean(AuthManagerInterface::class);
+            $manager = Swoft::getBean(AuthManagerInterface::class);
             $session = $manager->testLogin($name, $pd);
             return ['token' => $session->getToken()];
         });

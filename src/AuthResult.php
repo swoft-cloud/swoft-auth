@@ -8,13 +8,12 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace Swoft\Auth\Bean;
+namespace Swoft\Auth;
 
-use Swoft\Bean\Annotation\Bean;
-use Swoft\Bean\Annotation\Scope;
+use Swoft\Bean\Annotation\Mapping\Bean;
 
 /**
- * @Bean(scope=Scope::PROTOTYPE)
+ * @Bean(scope=Bean::PROTOTYPE)
  */
 class AuthResult
 {
@@ -28,22 +27,38 @@ class AuthResult
      */
     protected $extendedData = [];
 
+    /**
+     * @return string
+     */
     public function getIdentity(): string
     {
         return $this->identity;
     }
 
+    /**
+     * @param string $identity
+     *
+     * @return AuthResult
+     */
     public function setIdentity(string $identity): self
     {
         $this->identity = $identity;
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getExtendedData(): array
     {
         return $this->extendedData;
     }
 
+    /**
+     * @param array $extendedData
+     *
+     * @return AuthResult
+     */
     public function setExtendedData(array $extendedData): self
     {
         $this->extendedData = $extendedData;

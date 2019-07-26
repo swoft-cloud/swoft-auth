@@ -8,26 +8,26 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace SwoftTest\Auth\Parser;
+namespace SwoftTest\Auth\UnitParser;
 
-use Swoft\App;
+use Swoft;
 use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Mapping\AuthManagerInterface;
 use Swoft\Auth\Mapping\AuthServiceInterface;
 use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Server\Router\HandlerMapping;
-use SwoftTest\Auth\AbstractTestCase;
-use SwoftTest\Auth\Manager\TestManager;
+use SwoftTest\Auth\UnitAbstractTestCase;
+use SwoftTest\Auth\UnitManager\TestManager;
 
 class BearerTokenParserTest extends AbstractTestCase
 {
     protected function registerRoute()
     {
         /** @var HandlerMapping $router */
-        $router = App::getBean('httpRouter');
+        $router = Swoft::getBean('httpRouter');
         $router->get('/bearer', function (Request $request) {
             /** @var AuthUserService $service */
-            $service = App::getBean(AuthServiceInterface::class);
+            $service = Swoft::getBean(AuthServiceInterface::class);
             $session = $service->getSession();
             return ['id' => $session->getIdentity()];
         });
@@ -41,7 +41,7 @@ class BearerTokenParserTest extends AbstractTestCase
     public function testHandle()
     {
         /** @var TestManager $manager */
-        $manager = App::getBean(AuthManagerInterface::class);
+        $manager = Swoft::getBean(AuthManagerInterface::class);
         $session = $manager->testLogin('user', '123456');
         $token = $session->getToken();
         $response = $this->request('GET', '/bearer', [], self::ACCEPT_JSON, ['Authorization' => 'Bearer ' . $token], '');
