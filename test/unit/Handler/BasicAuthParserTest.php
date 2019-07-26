@@ -18,6 +18,7 @@ use SwoftTest\Auth\UnitAbstractTestCase;
 
 /**
  * Class BasicAuthParserTest
+ *
  * @package SwoftTest\Auth\UnitParser
  */
 class BasicAuthParserTest extends AbstractTestCase
@@ -28,7 +29,7 @@ class BasicAuthParserTest extends AbstractTestCase
         $router = Swoft::getBean('httpRouter');
         $router->get('/', function (Request $request) {
             $name = $request->getAttribute(AuthConst::BASIC_USER_NAME);
-            $pd = $request->getAttribute(AuthConst::BASIC_PASSWORD);
+            $pd   = $request->getAttribute(AuthConst::BASIC_PASSWORD);
             return ['username' => $name, 'password' => $pd];
         });
     }
@@ -40,9 +41,9 @@ class BasicAuthParserTest extends AbstractTestCase
     {
         $username = 'user';
         $password = '123';
-        $parser = base64_encode($username . ':' . $password);
+        $parser   = base64_encode($username . ':' . $password);
         $response = $this->request('GET', '/', [], self::ACCEPT_JSON, ['Authorization' => 'Basic ' . $parser], 'test');
-        $res = $response->getBody()->getContents();
+        $res      = $response->getBody()->getContents();
         $this->assertEquals(json_decode($res, true), ['username' => $username, 'password' => $password]);
     }
 }

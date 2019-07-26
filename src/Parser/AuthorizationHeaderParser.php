@@ -13,10 +13,10 @@ namespace Swoft\Auth\Parser;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft;
 use Swoft\Auth\AuthConst;
-use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Contract\AuthHandlerInterface;
 use Swoft\Auth\Contract\AuthorizationParserInterface;
+use Swoft\Auth\ErrorCode;
+use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Parser\Handler\BasicAuthHandler;
 use Swoft\Auth\Parser\Handler\BearerTokenHandler;
 use Swoft\Bean\Annotation\Value;
@@ -45,11 +45,13 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
     public function parse(ServerRequestInterface $request): ServerRequestInterface
     {
         $authValue = $request->getHeaderLine($this->headerKey);
-        $type = $this->getHeadString($authValue);
+        $type      = $this->getHeadString($authValue);
         if (isset($this->mergeTypes()[$type])) {
             $handler = Swoft::getBean($this->mergeTypes()[$type]);
-            if (! $handler instanceof AuthHandlerInterface) {
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('%s  should implement Swoft\Auth\Contract\AuthHandlerInterface', $this->mergeTypes()[$type]));
+            if (!$handler instanceof AuthHandlerInterface) {
+                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
+                    sprintf('%s  should implement Swoft\Auth\Contract\AuthHandlerInterface',
+                        $this->mergeTypes()[$type]));
             }
             $request = $handler->handle($request);
         }
@@ -73,7 +75,7 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
     {
         return [
             BearerTokenHandler::NAME => BearerTokenHandler::class,
-            BasicAuthHandler::NAME => BasicAuthHandler::class
+            BasicAuthHandler::NAME   => BasicAuthHandler::class
         ];
     }
 }

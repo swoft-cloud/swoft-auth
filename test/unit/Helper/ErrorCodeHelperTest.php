@@ -22,7 +22,7 @@ class ErrorCodeHelperTest extends AbstractTestCase
     public function testGet()
     {
         $helper = new ErrorCodeHelper();
-        $arr = $helper->get(ErrorCode::ACCESS_DENIED);
+        $arr    = $helper->get(ErrorCode::ACCESS_DENIED);
         $this->assertArrayHasKey('statusCode', $arr);
     }
 }

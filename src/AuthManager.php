@@ -10,7 +10,6 @@
 
 namespace Swoft\Auth;
 
-use function json_encode;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use ReflectionException;
@@ -19,11 +18,12 @@ use Swoft\Auth\Contract\AccountTypeInterface;
 use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Auth\Contract\TokenParserInterface;
 use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Auth\Exception\RuntimeException;
-use function context;
+use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Bean\Exception\ContainerException;
 use Throwable;
+use function context;
+use function json_encode;
 
 /**
  * Class AuthManager
@@ -115,7 +115,7 @@ class AuthManager implements AuthManagerInterface
         if ($this->cacheEnable === true) {
             try {
                 $this->getCacheClient()->set($this->getCacheKey($session->getIdentity(), $session->getExtendedData()),
-                        $session->getToken(), $this->getSessionDuration());
+                    $session->getToken(), $this->getSessionDuration());
             } catch (\InvalidArgumentException $e) {
                 $err = sprintf('%s Invalid Argument : %s', $session->getIdentity(), $e->getMessage());
                 throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
@@ -252,7 +252,7 @@ class AuthManager implements AuthManagerInterface
         if ($this->cacheEnable === true) {
             try {
                 $cache = $this->getCacheClient()->get($this->getCacheKey($session->getIdentity(),
-                        $session->getExtendedData()));
+                    $session->getExtendedData()));
                 if (!$cache || $cache !== $token) {
                     throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
                 }

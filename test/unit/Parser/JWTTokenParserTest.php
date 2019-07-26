@@ -24,10 +24,10 @@ class JWTTokenParserTest extends AbstractTestCase
      */
     public function testGetToken()
     {
-        $parser = Swoft::getBean(JWTTokenParser::class);
+        $parser  = Swoft::getBean(JWTTokenParser::class);
         $session = new AuthSession();
         $session->setIdentity(2);
-        $session->setExpirationTime(time()+10);
+        $session->setExpirationTime(time() + 10);
         $session->setAccountTypeName(TestAccount::class);
         $token = $parser->getToken($session);
         $this->assertStringStartsWith('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9', $token);
@@ -39,7 +39,7 @@ class JWTTokenParserTest extends AbstractTestCase
      */
     public function testGetSession()
     {
-        $token = $this->testGetToken();
+        $token  = $this->testGetToken();
         $parser = Swoft::getBean(JWTTokenParser::class);
         /** @var AuthSession $session */
         $session = $parser->getSession($token);

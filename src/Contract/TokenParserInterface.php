@@ -14,7 +14,7 @@ use Swoft\Auth\AuthSession;
 
 interface TokenParserInterface
 {
-    public function getToken(AuthSession $session):string ;
+    public function getToken(AuthSession $session): string;
 
-    public function getSession(string $token):AuthSession ;
+    public function getSession(string $token): AuthSession;
 }

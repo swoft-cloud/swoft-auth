@@ -22,15 +22,20 @@ class BasicAuthHandler implements AuthHandlerInterface
 {
     const NAME = 'Basic';
 
+    /**
+     * @param ServerRequestInterface $request
+     *
+     * @return ServerRequestInterface
+     */
     public function handle(ServerRequestInterface $request): ServerRequestInterface
     {
-        $authHeader = $request->getHeaderLine(AuthConst::HEADER_KEY) ?? '';
-        $basic = $this->parseValue($authHeader);
-        if ($basic) {
-            $request = $request
-                ->withAttribute(AuthConst::BASIC_USER_NAME, $this->getUsername($basic))
-                ->withAttribute(AuthConst::BASIC_PASSWORD, $this->getPassword($basic));
+        $authHeader = $request->getHeaderLine(AuthConst::HEADER_KEY);
+
+        if ($basic = $this->parseValue($authHeader)) {
+            $request = $request->withAttribute(AuthConst::BASIC_USER_NAME, $this->getUsername($basic))
+                               ->withAttribute(AuthConst::BASIC_PASSWORD, $this->getPassword($basic));
         }
+
         return $request;
     }
 
@@ -53,6 +58,6 @@ class BasicAuthHandler implements AuthHandlerInterface
         if (!$val) {
             return null;
         }
-        return  explode(':', base64_decode($val));
+        return explode(':', base64_decode($val));
     }
 }

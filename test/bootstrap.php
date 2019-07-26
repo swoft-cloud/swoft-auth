@@ -16,13 +16,13 @@ require_once __DIR__ . '/config/define.php';
 \Swoft::$isInTest = true;
 \Swoft\Bean\BeanFactory::init();
 
-/* @var \Swoft\Bootstrap\Boots\Bootable $bootstrap*/
+/* @var \Swoft\Bootstrap\Boots\Bootable $bootstrap */
 $bootstrap = \Swoft::getBean(\Swoft\Bootstrap\Bootstrap::class);
 $bootstrap->bootstrap();
 
 \Swoft\Bean\BeanFactory::reload([
     'application' => [
-        'class' => \Swoft\Testing\Application::class,
+        'class'  => \Swoft\Testing\Application::class,
         'inTest' => true
     ],
 ]);

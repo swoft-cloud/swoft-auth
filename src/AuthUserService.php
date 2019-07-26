@@ -11,11 +11,8 @@
 namespace Swoft\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Swoft\Auth\AuthSession;
-use Swoft\Auth\AuthConst;
-use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Contract\AuthServiceInterface;
+use Swoft\Auth\Exception\AuthException;
 
 /**
  * Class AuthUserService
@@ -26,7 +23,7 @@ class AuthUserService implements AuthServiceInterface
 {
     public function getUserIdentity(): string
     {
-        if (! $this->getSession()) {
+        if (!$this->getSession()) {
             return '';
         }
         return $this->getSession()->getIdentity() ?? '';
@@ -34,7 +31,7 @@ class AuthUserService implements AuthServiceInterface
 
     public function getUserExtendData(): array
     {
-        if (! $this->getSession()) {
+        if (!$this->getSession()) {
             return [];
         }
         return $this->getSession()->getExtendedData() ?? [];
@@ -61,7 +58,8 @@ class AuthUserService implements AuthServiceInterface
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool
     {
-        throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, sprintf('AuthUserService::auth() method should be implemented in %s', static::class));
+        throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
+            sprintf('AuthUserService::auth() method should be implemented in %s', static::class));
     }
 
     /**
@@ -70,7 +68,7 @@ class AuthUserService implements AuthServiceInterface
     protected function getHandlerArray(string $handler)
     {
         $segments = explode('@', trim($handler));
-        if (! isset($segments[1])) {
+        if (!isset($segments[1])) {
             return null;
         }
         return $segments;

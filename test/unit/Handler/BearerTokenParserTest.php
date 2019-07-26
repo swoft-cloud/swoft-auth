@@ -41,11 +41,12 @@ class BearerTokenParserTest extends AbstractTestCase
     public function testHandle()
     {
         /** @var TestManager $manager */
-        $manager = Swoft::getBean(AuthManagerInterface::class);
-        $session = $manager->testLogin('user', '123456');
-        $token = $session->getToken();
-        $response = $this->request('GET', '/bearer', [], self::ACCEPT_JSON, ['Authorization' => 'Bearer ' . $token], '');
-        $res = $response->getBody()->getContents();
+        $manager  = Swoft::getBean(AuthManagerInterface::class);
+        $session  = $manager->testLogin('user', '123456');
+        $token    = $session->getToken();
+        $response = $this->request('GET', '/bearer', [], self::ACCEPT_JSON, ['Authorization' => 'Bearer ' . $token],
+            '');
+        $res      = $response->getBody()->getContents();
         $this->assertEquals(json_decode($res, true), ['id' => 1]);
     }
 }

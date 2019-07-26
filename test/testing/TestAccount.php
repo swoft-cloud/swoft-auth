@@ -16,6 +16,7 @@ use Swoft\Bean\Annotation\Mapping\Bean;
 
 /**
  * Class TestAccount
+ *
  * @package SwoftTest\Auth
  * @Bean()
  */
@@ -28,12 +29,12 @@ class TestAccount implements AccountTypeInterface
      */
     public function login(array $data): AuthResult
     {
-        $name = $data[0] ?? '';
-        $pw = $data[1] ?? '';
+        $name   = $data[0] ?? '';
+        $pw     = $data[1] ?? '';
         $result = new AuthResult();
         if ($name !== '' && $pw !== '') {
             $result->setIdentity(1);
-            $result->setExtendedData(['role'=>'test']);
+            $result->setExtendedData(['role' => 'test']);
         } else {
             $result->setIdentity(1);
         }
