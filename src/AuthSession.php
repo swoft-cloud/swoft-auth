@@ -11,10 +11,9 @@
 namespace Swoft\Auth;
 
 use Swoft\Bean\Annotation\Mapping\Bean;
-use Swoft\Bean\Annotation\Scope;
 
 /**
- * @Bean(scope=Scope::PROTOTYPE)
+ * @Bean(scope=Bean::PROTOTYPE)
  */
 class AuthSession
 {

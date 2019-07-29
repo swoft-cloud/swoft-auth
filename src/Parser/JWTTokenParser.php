@@ -14,7 +14,6 @@ use Firebase\JWT\JWT;
 use Swoft\Auth\AuthSession;
 use Swoft\Auth\Contract\TokenParserInterface;
 use Swoft\Bean\Annotation\Mapping\Bean;
-use Swoft\Bean\Annotation\Value;
 
 /**
  * @Bean()
@@ -30,17 +29,22 @@ class JWTTokenParser implements TokenParserInterface
     public const ALGORITHM_RS256 = 'RS256';
 
     /**
-     * @Value("${config.auth.jwt.algorithm}")
+     * Value("${config.auth.jwt.algorithm}")
      * @var string
      */
     protected $algorithm = self::ALGORITHM_HS256;
 
     /**
-     * @Value("${config.auth.jwt.secret}")
+     * Value("${config.auth.jwt.secret}")
      * @var string
      */
     protected $secret = 'swoft';
 
+    /**
+     * @param AuthSession $session
+     *
+     * @return string
+     */
     public function getToken(AuthSession $session): string
     {
         $tokenData = $this->create($session->getAccountTypeName(), $session->getIdentity(), $session->getCreateTime(),
@@ -65,7 +69,9 @@ class JWTTokenParser implements TokenParserInterface
             is generally application specific.
             The iss value is a case-sensitive string containing
             a StringOrURI value. Use of this claim is OPTIONAL.
-            ------------------------------------------------*/ 'iss'               => $issuer,
+            ------------------------------------------------
+            */
+            'iss'               => $issuer,
 
             /*
             The sub (subject) claim identifies the principal
@@ -77,7 +83,9 @@ class JWTTokenParser implements TokenParserInterface
             is generally application specific. The sub value
             is a case-sensitive string containing a
             StringOrURI value. Use of this claim is OPTIONAL.
-            ------------------------------------------------*/ 'sub'   => $user,
+            ------------------------------------------------
+            */
+            'sub'   => $user,
 
             /*
             The iat (issued at) claim identifies the time at
@@ -85,7 +93,8 @@ class JWTTokenParser implements TokenParserInterface
             to determine the age of the JWT. Its value MUST
             be a number containing a NumericDate value.
             Use of this claim is OPTIONAL.
-            ------------------------------------------------*/ 'iat'   => $iat,
+            ------------------------------------------------
+            */ 'iat'   => $iat,
 
             /*
             The exp (expiration time) claim identifies the
@@ -98,11 +107,13 @@ class JWTTokenParser implements TokenParserInterface
             to account for clock skew. Its value MUST be a
             number containing a NumericDate value.
             Use of this claim is OPTIONAL.
-            ------------------------------------------------*/ 'exp'   => $exp,
+            ------------------------------------------------
+            */ 'exp'   => $exp,
 
             /*
              Expand data
-             ------------------------------------------------*/ 'data' => $data,
+             ------------------------------------------------
+            */ 'data' => $data,
         ];
     }
 

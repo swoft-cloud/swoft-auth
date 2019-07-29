@@ -24,7 +24,7 @@ use Swoft\Bean\Exception\ContainerException;
  */
 class BearerTokenHandler implements AuthHandlerInterface
 {
-    public public const NAME = 'Bearer';
+    public const NAME = 'Bearer';
 
     /**
      * @param ServerRequestInterface $request
@@ -46,6 +46,11 @@ class BearerTokenHandler implements AuthHandlerInterface
         return $request;
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     *
+     * @return string|string[]|null
+     */
     protected function getToken(ServerRequestInterface $request)
     {
         $authHeader = $request->getHeaderLine(AuthConst::HEADER_KEY);
