@@ -29,13 +29,13 @@ class JWTTokenParser implements TokenParserInterface
     public const ALGORITHM_RS256 = 'RS256';
 
     /**
-     * Value("${config.auth.jwt.algorithm}")
+     * Value("auth.jwt.algorithm")
      * @var string
      */
     protected $algorithm = self::ALGORITHM_HS256;
 
     /**
-     * Value("${config.auth.jwt.secret}")
+     * Value("auth.jwt.secret")
      * @var string
      */
     protected $secret = 'swoft';
