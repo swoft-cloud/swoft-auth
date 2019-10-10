@@ -24,6 +24,11 @@ interface AuthServiceInterface
      * }
      * return false;
      * </code>
+     *
+     * @param string                 $requestHandler
+     * @param ServerRequestInterface $request
+     *
+     * @return bool
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool;
 }

@@ -21,6 +21,7 @@ use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Exception\RuntimeException;
 use Swoft\Auth\Parser\JWTTokenParser;
 use Swoft\Bean\Exception\ContainerException;
+use Swoft\Exception\SwoftException;
 use Throwable;
 use function context;
 use function json_encode;
@@ -79,12 +80,18 @@ class AuthManager implements AuthManagerInterface
 
     /**
      * @return AuthSession|mixed
+     * @throws SwoftException
      */
     public function getSession()
     {
         return context()->get(AuthConst::AUTH_SESSION);
     }
 
+    /**
+     * @param AuthSession $session
+     *
+     * @throws SwoftException
+     */
     public function setSession(AuthSession $session): void
     {
         context()->set(AuthConst::AUTH_SESSION, $session);
@@ -154,8 +161,6 @@ class AuthManager implements AuthManagerInterface
      * @param string $name
      *
      * @return AccountTypeInterface|null
-     * @throws ContainerException
-     * @throws ReflectionException
      */
     public function getAccountType(string $name): ?AccountTypeInterface
     {
@@ -173,8 +178,6 @@ class AuthManager implements AuthManagerInterface
 
     /**
      * @return TokenParserInterface
-     * @throws ContainerException
-     * @throws ReflectionException
      */
     public function getTokenParser(): TokenParserInterface
     {
@@ -196,8 +199,6 @@ class AuthManager implements AuthManagerInterface
 
     /**
      * @return CacheInterface
-     * @throws ContainerException
-     * @throws ReflectionException
      */
     public function getCacheClient(): CacheInterface
     {

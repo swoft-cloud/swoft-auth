@@ -4,29 +4,28 @@ namespace SwoftTest\Auth\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Swoft;
+use Swoft\Http\Message\Request;
+use Swoft\Http\Message\Response;
+use Swoft\Http\Server\HttpDispatcher;
 use Swoft\Stdlib\Helper\ArrayHelper;
-use Swoft\Http\Message\Testing\Web\Request;
-use Swoft\Http\Message\Testing\Web\Response;
-use Swoft\Http\Server\Router\HandlerMapping;
-use Swoft\Testing\SwooleRequest as TestSwooleRequest;
-use Swoft\Testing\SwooleResponse as TestSwooleResponse;
+use SwoftTest\Http\Server\Testing\MockRequest;
+use SwoftTest\Http\Server\Testing\MockResponse;
 
 /**
  * Class AbstractTestCase
  */
 class AbstractTestCase extends TestCase
 {
-    const ACCEPT_VIEW = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8';
+    public const ACCEPT_VIEW = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8';
 
-    const ACCEPT_JSON = 'application/json';
+    public const ACCEPT_JSON = 'application/json';
 
-    const ACCEPT_RAW = 'text/plain';
+    public const ACCEPT_RAW = 'text/plain';
 
-    protected function registerRoute()
+    protected function registerRoute(): void
     {
-        /** @var HandlerMapping $router */
+        /** @var Swoft\Http\Server\Router\Router $router */
         $router = Swoft::getBean('httpRouter');
-
         $router->get('/', function () {
             return [1];
         });
@@ -42,7 +41,8 @@ class AbstractTestCase extends TestCase
      * @param array  $headers
      * @param string $rawContent
      *
-     * @return bool|\Swoft\Http\Message\Testing\Web\Response
+     * @return bool|Response
+     * @throws Swoft\Exception\SwoftException
      */
     public function request(
         string $method,
@@ -53,8 +53,8 @@ class AbstractTestCase extends TestCase
         string $rawContent = ''
     ) {
         $method         = strtoupper($method);
-        $swooleResponse = new TestSwooleResponse();
-        $swooleRequest  = new TestSwooleRequest();
+        $swooleResponse = new MockResponse();
+        $swooleRequest  = new MockRequest();
         $this->registerRoute();
         $this->buildMockRequest($method, $uri, $parameters, $accept, $swooleRequest, $headers);
 
@@ -63,9 +63,11 @@ class AbstractTestCase extends TestCase
         $request  = Request::loadFromSwooleRequest($swooleRequest);
         $response = new Response($swooleResponse);
 
-        /** @var \Swoft\Http\Server\ServerDispatcher $dispatcher */
-        $dispatcher = Swoft::getBean('serverDispatcher');
-        return $dispatcher->dispatch($request, $response);
+        /** @var HttpDispatcher $dispatcher */
+        $dispatcher = Swoft::getBean('httpDispatcher');
+
+        $dispatcher->dispatch($request, $response);
+        return false;
     }
 
     /**
@@ -98,7 +100,8 @@ class AbstractTestCase extends TestCase
      * @param array  $headers
      * @param string $rawContent
      *
-     * @return bool|\Swoft\Http\Message\Testing\Web\Response
+     * @return bool|Response
+     * @throws Swoft\Exception\SwoftException
      */
     public function view(
         string $method,
@@ -146,7 +149,7 @@ class AbstractTestCase extends TestCase
         string $accept,
         &$swooleRequest,
         array $headers = []
-    ) {
+    ): void {
         $urlAry    = parse_url($uri);
         $urlParams = [];
         if (isset($urlAry['query'])) {

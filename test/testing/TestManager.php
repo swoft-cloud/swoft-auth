@@ -11,6 +11,7 @@
 namespace SwoftTest\Auth\Testing;
 
 use Swoft\Auth\AuthManager;
+use Swoft\Auth\AuthSession;
 use Swoft\Redis\Redis;
 
 class TestManager extends AuthManager
@@ -19,7 +20,7 @@ class TestManager extends AuthManager
 
     protected $cacheEnable = true;
 
-    public function testLogin(string $username, string $password)
+    public function testLogin(string $username, string $password): AuthSession
     {
         return $this->login(TestAccount::class, [
             $username,

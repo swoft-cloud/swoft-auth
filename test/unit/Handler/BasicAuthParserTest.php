@@ -12,8 +12,7 @@ namespace SwoftTest\Auth\UnitParser;
 
 use Swoft;
 use Swoft\Auth\AuthConst;
-use Swoft\Http\Message\Server\Request;
-use Swoft\Http\Server\Router\HandlerMapping;
+use Swoft\Http\Message\Request;
 use SwoftTest\Auth\Unit\AbstractTestCase;
 
 /**
@@ -23,9 +22,9 @@ use SwoftTest\Auth\Unit\AbstractTestCase;
  */
 class BasicAuthParserTest extends AbstractTestCase
 {
-    protected function registerRoute()
+    protected function registerRoute(): void
     {
-        /** @var HandlerMapping $router */
+        /** @var Swoft\Http\Server\Router\Router $router */
         $router = Swoft::getBean('httpRouter');
         $router->get('/', function (Request $request) {
             $name = $request->getAttribute(AuthConst::BASIC_USER_NAME);
@@ -37,7 +36,7 @@ class BasicAuthParserTest extends AbstractTestCase
     /**
      * @covers BasicAuthHandler::handle()
      */
-    public function testHandle()
+    public function testHandle(): void
     {
         $username = 'user';
         $password = '123';

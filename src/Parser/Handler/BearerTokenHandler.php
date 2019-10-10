@@ -11,13 +11,11 @@
 namespace Swoft\Auth\Parser\Handler;
 
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionException;
 use Swoft;
 use Swoft\Auth\AuthConst;
 use Swoft\Auth\Contract\AuthHandlerInterface;
 use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Bean\Annotation\Mapping\Bean;
-use Swoft\Bean\Exception\ContainerException;
 
 /**
  * @Bean()
@@ -30,8 +28,6 @@ class BearerTokenHandler implements AuthHandlerInterface
      * @param ServerRequestInterface $request
      *
      * @return ServerRequestInterface
-     * @throws ContainerException
-     * @throws ReflectionException
      */
     public function handle(ServerRequestInterface $request): ServerRequestInterface
     {

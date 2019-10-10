@@ -19,7 +19,7 @@ class ErrorCodeHelperTest extends AbstractTestCase
     /**
      * @covers ErrorCodeHelper::get()
      */
-    public function testGet()
+    public function testGet(): void
     {
         $helper = new ErrorCodeHelper();
         $arr    = $helper->get(ErrorCode::ACCESS_DENIED);

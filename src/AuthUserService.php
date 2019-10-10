@@ -13,6 +13,7 @@ namespace Swoft\Auth;
 use Psr\Http\Message\ServerRequestInterface;
 use Swoft\Auth\Contract\AuthServiceInterface;
 use Swoft\Auth\Exception\AuthException;
+use Swoft\Exception\SwoftException;
 
 /**
  * Class AuthUserService
@@ -39,6 +40,7 @@ class AuthUserService implements AuthServiceInterface
 
     /**
      * @return AuthSession|null
+     * @throws SwoftException
      */
     public function getSession(): ?AuthSession
     {
@@ -55,6 +57,11 @@ class AuthUserService implements AuthServiceInterface
      * }
      * return false;
      * </code>
+     *
+     * @param string                 $requestHandler
+     * @param ServerRequestInterface $request
+     *
+     * @return bool
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool
     {
@@ -63,6 +70,8 @@ class AuthUserService implements AuthServiceInterface
     }
 
     /**
+     * @param string $handler
+     *
      * @return array|null
      */
     protected function getHandlerArray(string $handler): ?array

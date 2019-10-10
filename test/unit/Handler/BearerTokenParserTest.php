@@ -14,16 +14,15 @@ use Swoft;
 use Swoft\Auth\AuthUserService;
 use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Auth\Contract\AuthServiceInterface;
-use Swoft\Http\Message\Server\Request;
-use Swoft\Http\Server\Router\HandlerMapping;
+use Swoft\Http\Message\Request;
 use SwoftTest\Auth\Unit\AbstractTestCase;
 use SwoftTest\Auth\Unit\Manager\TestManager;
 
 class BearerTokenParserTest extends AbstractTestCase
 {
-    protected function registerRoute()
+    protected function registerRoute(): void
     {
-        /** @var HandlerMapping $router */
+        /** @var Swoft\Http\Server\Router\Router $router */
         $router = Swoft::getBean('httpRouter');
         $router->get('/bearer', function (Request $request) {
             /** @var AuthUserService $service */
@@ -38,7 +37,7 @@ class BearerTokenParserTest extends AbstractTestCase
      * @covers BearerTokenHandler::handle()
      * @covers AuthUserService::getSession()
      */
-    public function testHandle()
+    public function testHandle(): void
     {
         /** @var TestManager $manager */
         $manager  = Swoft::getBean(AuthManagerInterface::class);

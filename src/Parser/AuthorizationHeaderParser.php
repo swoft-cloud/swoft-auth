@@ -11,7 +11,6 @@
 namespace Swoft\Auth\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionException;
 use Swoft;
 use Swoft\Auth\AuthConst;
 use Swoft\Auth\Contract\AuthHandlerInterface;
@@ -20,7 +19,6 @@ use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Auth\Parser\Handler\BasicAuthHandler;
 use Swoft\Auth\Parser\Handler\BearerTokenHandler;
-use Swoft\Bean\Exception\ContainerException;
 use Swoft\Stdlib\Helper\ArrayHelper;
 
 class AuthorizationHeaderParser implements AuthorizationParserInterface
@@ -46,8 +44,6 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
      * @param ServerRequestInterface $request
      *
      * @return ServerRequestInterface
-     * @throws ContainerException
-     * @throws ReflectionException
      */
     public function parse(ServerRequestInterface $request): ServerRequestInterface
     {

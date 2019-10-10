@@ -13,13 +13,11 @@ namespace Swoft\Auth\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use ReflectionException;
 use Swoft;
 use Swoft\Auth\Contract\AuthServiceInterface;
 use Swoft\Auth\ErrorCode;
 use Swoft\Auth\Exception\AuthException;
 use Swoft\Bean\Annotation\Mapping\Bean;
-use Swoft\Bean\Exception\ContainerException;
 use Swoft\Http\Server\Contract\MiddlewareInterface;
 
 /**
@@ -35,8 +33,6 @@ class AclMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler
      *
      * @return ResponseInterface
-     * @throws ContainerException
-     * @throws ReflectionException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

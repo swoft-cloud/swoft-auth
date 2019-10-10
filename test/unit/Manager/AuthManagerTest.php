@@ -14,15 +14,14 @@ use Swoft;
 use Swoft\Auth\AuthConst;
 use Swoft\Auth\AuthManager;
 use Swoft\Auth\Contract\AuthManagerInterface;
-use Swoft\Http\Message\Server\Request;
-use Swoft\Http\Server\Router\HandlerMapping;
+use Swoft\Http\Message\Request;
 use SwoftTest\Auth\Unit\AbstractTestCase;
 
 class AuthManagerTest extends AbstractTestCase
 {
-    protected function registerRoute()
+    protected function registerRoute(): void
     {
-        /** @var HandlerMapping $router */
+        /** @var Swoft\Http\Server\Router\Router $router */
         $router = Swoft::getBean('httpRouter');
         $router->post('/login', function (Request $request) {
             $name = $request->getAttribute(AuthConst::BASIC_USER_NAME);
@@ -32,6 +31,7 @@ class AuthManagerTest extends AbstractTestCase
             $session = $manager->testLogin($name, $pd);
             return ['token' => $session->getToken()];
         });
+
         $router->get('/test', function (Request $request) {
             return 'pass';
         });
@@ -40,7 +40,7 @@ class AuthManagerTest extends AbstractTestCase
     /**
      * @covers AuthManager::login()
      */
-    public function testLogin()
+    public function testLogin(): void
     {
         $username = 'user';
         $password = '123';
