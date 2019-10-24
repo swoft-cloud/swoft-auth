@@ -45,6 +45,9 @@ class AutoLoader extends SwoftComponent
             ],
             AuthServiceInterface::class         => [
                 'class' => AuthUserService::class
+            ],
+            'authDriver'        => [
+                'class' => AuthUserService::class
             ]
         ];
     }

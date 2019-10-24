@@ -3,7 +3,7 @@
  * This file is part of Swoft.
  *
  * @link     https://swoft.org
- * @document https://doc.swoft.org
+ * @document https://swoft.org/docs
  * @contact  group@swoft.org
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
@@ -21,6 +21,11 @@ use Swoft\Auth\Parser\Handler\BasicAuthHandler;
 use Swoft\Auth\Parser\Handler\BearerTokenHandler;
 use Swoft\Stdlib\Helper\ArrayHelper;
 
+/**
+ * Class AuthorizationHeaderParser
+ *
+ * @since 2.0
+ */
 class AuthorizationHeaderParser implements AuthorizationParserInterface
 {
     /**

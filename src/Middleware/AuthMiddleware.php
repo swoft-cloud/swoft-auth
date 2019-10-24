@@ -3,7 +3,7 @@
  * This file is part of Swoft.
  *
  * @link     https://swoft.org
- * @document https://doc.swoft.org
+ * @document https://swoft.org/docs
  * @contact  group@swoft.org
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
@@ -41,7 +41,9 @@ class AuthMiddleware implements MiddlewareInterface
             throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
                 'AuthorizationParser should implement Swoft\Auth\Contract\AuthorizationParserInterface');
         }
+
         $request = $parser->parse($request);
+
         return $handler->handle($request);
     }
 }

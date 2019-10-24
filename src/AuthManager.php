@@ -3,7 +3,7 @@
  * This file is part of Swoft.
  *
  * @link     https://swoft.org
- * @document https://doc.swoft.org
+ * @document https://swoft.org/docs
  * @contact  group@swoft.org
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
@@ -12,17 +12,15 @@ namespace Swoft\Auth;
 
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
-use ReflectionException;
 use Swoft;
 use Swoft\Auth\Contract\AccountTypeInterface;
 use Swoft\Auth\Contract\AuthManagerInterface;
 use Swoft\Auth\Contract\TokenParserInterface;
 use Swoft\Auth\Exception\AuthException;
-use Swoft\Auth\Exception\RuntimeException;
 use Swoft\Auth\Parser\JWTTokenParser;
-use Swoft\Bean\Exception\ContainerException;
 use Swoft\Exception\SwoftException;
 use Throwable;
+use RuntimeException;
 use function context;
 use function json_encode;
 
@@ -222,8 +220,7 @@ class AuthManager implements AuthManagerInterface
      * @param string $token
      *
      * @return bool
-     * @throws ContainerException
-     * @throws ReflectionException
+     * @throws SwoftException
      */
     public function authenticateToken(string $token): bool
     {
