@@ -59,9 +59,9 @@ class AuthorizationHeaderParser implements AuthorizationParserInterface
             $handler = Swoft::getBean($this->mergeTypes()[$type]);
 
             if (!$handler instanceof AuthHandlerInterface) {
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
+                throw new AuthException(
                     sprintf('%s  should implement Swoft\Auth\Contract\AuthHandlerInterface',
-                        $this->mergeTypes()[$type]));
+                        $this->mergeTypes()[$type]), ErrorCode::POST_DATA_NOT_PROVIDED);
             }
 
             $request = $handler->handle($request);

@@ -106,12 +106,12 @@ class AuthManager implements AuthManagerInterface
     public function login(string $accountTypeName, array $data): AuthSession
     {
         if (!$account = $this->getAccountType($accountTypeName)) {
-            throw new AuthException(ErrorCode::AUTH_INVALID_ACCOUNT_TYPE);
+            throw new AuthException('AUTH_INVALID_ACCOUNT_TYPE', ErrorCode::AUTH_INVALID_ACCOUNT_TYPE);
         }
 
         $result = $account->login($data);
         if (!$result instanceof AuthResult || $result->getIdentity() === '') {
-            throw new AuthException(ErrorCode::AUTH_LOGIN_FAILED);
+            throw new AuthException('AUTH_LOGIN_FAILED', ErrorCode::AUTH_LOGIN_FAILED);
         }
 
         $session = $this->generateSession($accountTypeName, $result->getIdentity(), $result->getExtendedData());
@@ -123,7 +123,7 @@ class AuthManager implements AuthManagerInterface
                     $session->getToken(), $this->getSessionDuration());
             } catch (\InvalidArgumentException $e) {
                 $err = sprintf('%s Invalid Argument : %s', $session->getIdentity(), $e->getMessage());
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
+                throw new AuthException('POST_DATA_NOT_PROVIDED', ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
 
@@ -228,7 +228,7 @@ class AuthManager implements AuthManagerInterface
             /** @var AuthSession $session */
             $session = $this->getTokenParser()->getSession($token);
         } catch (Throwable $e) {
-            throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
+            throw new AuthException('AUTH_TOKEN_INVALID', ErrorCode::AUTH_TOKEN_INVALID);
         }
 
         if (!$session) {
@@ -236,15 +236,15 @@ class AuthManager implements AuthManagerInterface
         }
 
         if ($session->getExpirationTime() < time()) {
-            throw new AuthException(ErrorCode::AUTH_SESSION_EXPIRED);
+            throw new AuthException('AUTH_SESSION_EXPIRED', ErrorCode::AUTH_SESSION_EXPIRED);
         }
 
         if (!$account = $this->getAccountType($session->getAccountTypeName())) {
-            throw new AuthException(ErrorCode::AUTH_SESSION_INVALID);
+            throw new AuthException('AUTH_SESSION_INVALID', ErrorCode::AUTH_SESSION_INVALID);
         }
 
         if (!$account->authenticate($session->getIdentity())) {
-            throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
+            throw new AuthException('AUTH_TOKEN_INVALID', ErrorCode::AUTH_TOKEN_INVALID);
         }
 
         if ($this->cacheEnable === true) {
@@ -252,11 +252,11 @@ class AuthManager implements AuthManagerInterface
                 $cache = $this->getCacheClient()->get($this->getCacheKey($session->getIdentity(),
                     $session->getExtendedData()));
                 if (!$cache || $cache !== $token) {
-                    throw new AuthException(ErrorCode::AUTH_TOKEN_INVALID);
+                    throw new AuthException('AUTH_TOKEN_INVALID', ErrorCode::AUTH_TOKEN_INVALID);
                 }
             } catch (InvalidArgumentException $e) {
                 $err = sprintf('Identity : %s ,err : %s', $session->getIdentity(), $e->getMessage());
-                throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED, $err);
+                throw new AuthException('POST_DATA_NOT_PROVIDED', ErrorCode::POST_DATA_NOT_PROVIDED, $err);
             }
         }
 

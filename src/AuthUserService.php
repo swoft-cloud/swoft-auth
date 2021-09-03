@@ -65,8 +65,8 @@ class AuthUserService implements AuthServiceInterface
      */
     public function auth(string $requestHandler, ServerRequestInterface $request): bool
     {
-        throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
-            sprintf('AuthUserService::auth() method should be implemented in %s', static::class));
+        throw new AuthException(
+            sprintf('AuthUserService::auth() method should be implemented in %s', static::class), ErrorCode::POST_DATA_NOT_PROVIDED);
     }
 
     /**

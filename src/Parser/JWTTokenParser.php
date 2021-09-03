@@ -14,6 +14,7 @@ use Firebase\JWT\JWT;
 use Swoft\Auth\AuthSession;
 use Swoft\Auth\Contract\TokenParserInterface;
 use Swoft\Bean\Annotation\Mapping\Bean;
+use Swoft\Config\Annotation\Mapping\Config;
 
 /**
  * @Bean()
@@ -29,14 +30,14 @@ class JWTTokenParser implements TokenParserInterface
     public const ALGORITHM_RS256 = 'RS256';
 
     /**
-     * Value("auth.jwt.algorithm")
+     * @Config("auth.jwt.algorithm")
      *
      * @var string
      */
     protected $algorithm = self::ALGORITHM_HS256;
 
     /**
-     * Value("auth.jwt.secret")
+     * @Config("auth.jwt.secret")
      *
      * @var string
      */

@@ -40,12 +40,12 @@ class AclMiddleware implements MiddlewareInterface
         $service        = Swoft::getBean(AuthServiceInterface::class);
 
         if (!$service instanceof AuthServiceInterface) {
-            throw new AuthException(ErrorCode::POST_DATA_NOT_PROVIDED,
-                'AuthService should implement Swoft\Auth\Contract\AuthServiceInterface');
+            throw new AuthException(
+                'AuthService should implement Swoft\Auth\Contract\AuthServiceInterface', ErrorCode::POST_DATA_NOT_PROVIDED);
         }
 
         if (!$service->auth($requestHandler, $request)) {
-            throw new AuthException(ErrorCode::ACCESS_DENIED);
+            throw new AuthException('ACCESS_DENIED', ErrorCode::ACCESS_DENIED);
         }
 
         return $handler->handle($request);
