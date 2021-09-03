@@ -1,5 +1,5 @@
 {
-  "name": "janfish/swoft-auth",
+  "name": "swoft/swoft-auth",
   "type": "library",
   "keywords": [
     "php",
